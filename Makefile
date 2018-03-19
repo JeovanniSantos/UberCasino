@@ -29,7 +29,7 @@ COMMON_CPP=./src/CheckStatus.cpp ./src/DDSEntityManager.cpp
 PitBoss: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ./src/PitBoss.cpp
 	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LIBS}
 
-Dealer: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ./src/Dealer.cpp ${COMMON_CPP}
+Dealer:  ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ./src/Dealer.cpp ${COMMON_CPP}
 	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LIBS}
 
 Player: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ./src/Player.cpp ${COMMON_CPP}
