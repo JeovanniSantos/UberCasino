@@ -4,12 +4,66 @@
 //  
 //  File name: UberCasino.cpp
 //  Source: idl/UberCasino.idl
-//  Generated: Mon Mar 19 15:53:58 2018
+//  Generated: Mon Mar 19 22:20:31 2018
 //  OpenSplice V6.4.140320OSS
 //  
 //******************************************************************
 
 #include "UberCasino.h"
+
+
+#if DDS_USE_EXPLICIT_TEMPLATES
+template class DDS_DCPS_FArray_var< UberCasino::Game::_dealer_cards, UberCasino::Game::_dealer_cards_slice, struct UberCasino::Game::_dealer_cards_uniq_>;
+template class DDS_DCPS_Array_forany< UberCasino::Game::_dealer_cards, UberCasino::Game::_dealer_cards_slice, struct UberCasino::Game::_dealer_cards_uniq_>;
+#endif
+
+template <>
+UberCasino::Game::_dealer_cards_slice* DDS_DCPS_ArrayHelper < UberCasino::Game::_dealer_cards, UberCasino::Game::_dealer_cards_slice, UberCasino::Game::_dealer_cards_uniq_>::alloc ()
+{
+   return UberCasino::Game::_dealer_cards_alloc ();
+}
+
+template <>
+void DDS_DCPS_ArrayHelper < UberCasino::Game::_dealer_cards, UberCasino::Game::_dealer_cards_slice, UberCasino::Game::_dealer_cards_uniq_>::copy (UberCasino::Game::_dealer_cards_slice *to, const UberCasino::Game::_dealer_cards_slice* from)
+{
+   UberCasino::Game::_dealer_cards_copy (to, from);
+}
+
+template <>
+void DDS_DCPS_ArrayHelper < UberCasino::Game::_dealer_cards, UberCasino::Game::_dealer_cards_slice, UberCasino::Game::_dealer_cards_uniq_>::free (UberCasino::Game::_dealer_cards_slice *ptr)
+{
+   UberCasino::Game::_dealer_cards_free (ptr);
+}
+
+UberCasino::Game::_dealer_cards_slice * UberCasino::Game::_dealer_cards_alloc ()
+{
+   UberCasino::card_t * ret = (UberCasino::card_t*) new UberCasino::card_t [10];
+   return (_dealer_cards_slice *) ret;
+}
+
+void UberCasino::Game::_dealer_cards_free (_dealer_cards_slice * s)
+{
+   delete [] s;
+}
+
+void UberCasino::Game::_dealer_cards_copy
+(
+   _dealer_cards_slice * to,
+   const _dealer_cards_slice * from
+)
+{
+   const UberCasino::card_t* sv = ( const UberCasino::card_t*) from;
+   UberCasino::card_t* tv = (UberCasino::card_t*) to;
+   for (DDS::ULong i = 0; i < 10; i++) tv[i] = sv[i];
+}
+
+UberCasino::Game::_dealer_cards_slice * UberCasino::Game::_dealer_cards_dup
+   (const _dealer_cards_slice * from)
+{
+   _dealer_cards_slice * to = _dealer_cards_alloc ();
+   _dealer_cards_copy (to, from);
+   return to;
+}
 
 
 #if DDS_USE_EXPLICIT_TEMPLATES

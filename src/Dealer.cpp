@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iostream>
 #include "DDSEntityManager.h"
+#include "ccpp_dds_dcps.h"
 #include "ccpp_UberCasino.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
@@ -11,12 +12,12 @@ using namespace DDS;
 using namespace UberCasino;
 using namespace std;
 
-class Dealer{
-
-  Dealer(){
-  }
+class UCDealer{
   
 public:
+  UCDealer(){
+  }
+
   /*
   function to to act as publisher and write data passed in as parameter
   */
@@ -72,15 +73,14 @@ public:
 /** MAIN FUNCTION **/
 int main(int argc, char **argv) 
 {
-  
   //create new dealer
-  
+ 
   //start the game
   
   //while game is on publish and subscribe data
 
   //if game is finsihed ask to start new game or quit
-  
+  /*
   Fl_Window *window = new Fl_Window(340,180);
   Fl_Box *box = new Fl_Box(20,40,300,100,"Hello, World!");
   box->box(FL_UP_BOX);
@@ -90,6 +90,7 @@ int main(int argc, char **argv)
   window->end();
   window->show(argc, argv);
   return Fl::run();
-  //return 0;
+*/
+  return 0;
 }
 

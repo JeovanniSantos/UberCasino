@@ -19,6 +19,23 @@ enum _UberCasino_suite_t {
     _UberCasino_spades
 };
 
+extern c_metaObject __UberCasino_card_kind__load (c_base base);
+enum _UberCasino_card_kind {
+    _UberCasino_ace,
+    _UberCasino_two,
+    _UberCasino_three,
+    _UberCasino_four,
+    _UberCasino_five,
+    _UberCasino_six,
+    _UberCasino_seven,
+    _UberCasino_eight,
+    _UberCasino_nine,
+    _UberCasino_ten,
+    _UberCasino_jack,
+    _UberCasino_queen,
+    _UberCasino_king
+};
+
 extern c_metaObject __UberCasino_card_t__load (c_base base);
 extern const char * __UberCasino_card_t__keys (void);
 extern const char * __UberCasino_card_t__name (void);
@@ -26,9 +43,8 @@ struct _UberCasino_card_t ;
 extern  c_bool __UberCasino_card_t__copyIn(c_base base, struct UberCasino::card_t *from, struct _UberCasino_card_t *to);
 extern  void __UberCasino_card_t__copyOut(void *_from, void *_to);
 struct _UberCasino_card_t {
-    c_long value;
+    enum _UberCasino_card_kind card;
     enum _UberCasino_suite_t suite;
-    c_bool face_up;
 };
 
 extern c_metaObject __UberCasino_player_action_t__load (c_base base);
@@ -94,6 +110,7 @@ struct _UberCasino_Game {
     c_char game_uid[8];
     c_char dealer_uid[8];
     struct _UberCasino_PlayerState p[7];
+    struct _UberCasino_card_t dealer_cards[10];
     c_long active_player;
 };
 

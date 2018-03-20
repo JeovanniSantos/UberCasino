@@ -77,7 +77,16 @@ __UberCasino_card_t__copyIn(
     c_bool result = OS_C_TRUE;
     (void) base;
 
-    to->value = (c_long)from->value;
+#ifdef OSPL_BOUNDS_CHECK
+    if((((c_long)from->card) >= 0) && (((c_long)from->card) < 13) ){
+        to->card = (enum _UberCasino_card_kind)from->card;
+    } else {
+        OS_REPORT (OS_ERROR, "copyIn", 0,"Member 'UberCasino::card_t.card' of type 'card_kind' is out of range.");
+        result = OS_C_FALSE;
+    }
+#else
+    to->card = (enum _UberCasino_card_kind)from->card;
+#endif
 #ifdef OSPL_BOUNDS_CHECK
     if((((c_long)from->suite) >= 0) && (((c_long)from->suite) < 4) ){
         to->suite = (enum _UberCasino_suite_t)from->suite;
@@ -88,7 +97,6 @@ __UberCasino_card_t__copyIn(
 #else
     to->suite = (enum _UberCasino_suite_t)from->suite;
 #endif
-    to->face_up = (c_bool)from->face_up;
     return result;
 }
 
@@ -228,6 +236,21 @@ if(result){
             }
         }
     }
+    {
+        typedef struct _UberCasino_card_t _DestType[10];
+        _DestType *dest = &to->dealer_cards;
+        int i1;
+
+        for (i1 = 0; (i1 < 10) && result; i1++) {
+            extern c_bool __UberCasino_card_t__copyIn(c_base base,
+    UberCasino::card_t *From,
+    struct _UberCasino_card_t *To);
+
+if(result){
+                result = __UberCasino_card_t__copyIn(base, (::UberCasino::card_t *)&(from->dealer_cards)[i1], (struct _UberCasino_card_t *)&(*dest)[i1]);
+            }
+        }
+    }
     to->active_player = (c_long)from->active_player;
     return result;
 }
@@ -239,9 +262,8 @@ __UberCasino_card_t__copyOut(
 {
     struct _UberCasino_card_t *from = (struct _UberCasino_card_t *)_from;
     struct ::UberCasino::card_t *to = (struct ::UberCasino::card_t *)_to;
-    to->value = (::DDS::Long)from->value;
+    to->card = (::UberCasino::card_kind)from->card;
     to->suite = (::UberCasino::suite_t)from->suite;
-    to->face_up = (::DDS::Boolean)(from->face_up != 0);
 }
 
 void
@@ -349,6 +371,17 @@ __UberCasino_Game__copyOut(
         for (i1 = 0; (i1 < 7); i1++) {
             extern void __UberCasino_PlayerState__copyOut(void *, void *);
             __UberCasino_PlayerState__copyOut((void *)&(*src)[i1], (void *)&(to->p)[i1]);
+        }
+    }
+    {
+        typedef struct _UberCasino_card_t _DestType[10];
+        _DestType *src = &from->dealer_cards;
+
+        int i1;
+
+        for (i1 = 0; (i1 < 10); i1++) {
+            extern void __UberCasino_card_t__copyOut(void *, void *);
+            __UberCasino_card_t__copyOut((void *)&(*src)[i1], (void *)&(to->dealer_cards)[i1]);
         }
     }
     to->active_player = (::DDS::Long)from->active_player;

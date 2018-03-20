@@ -10,12 +10,12 @@ module UberCasino {
    const long MAX_CARDS_PER_PLAYER = 10;
 
    enum suite_t {hearts,diamonds,clubs,spades};
+   enum card_kind {ace,two,three,four,five,six,seven,eight,nine,ten,jack,queen,king};
 
    struct card_t
    {
-      long value;
-      suite_t suite;
-      boolean face_up;
+      card_kind card;
+      suite_t suite;      
    };
 
 // State
@@ -56,6 +56,7 @@ module UberCasino {
        char game_uid[8];  // the game currently being played
        char dealer_uid[8];
        PlayerState p[MAX_PLAYERS_IN_A_GAME];
+       card_t dealer_cards[MAX_CARDS_PER_PLAYER]; // 0'th element is 'hole card'
        long active_player; // active when gstate == 'playing', this is the
                            // index of the player that is active
    };

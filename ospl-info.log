@@ -1,0 +1,468 @@
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:01:14 CDT 2018
+Description : u_domainNew:Database allocated on heap
+Node        : fedora27.lab.local
+Process     : Player <7202>
+Thread      : spliced 7f4d6478c700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1521522074.631259146
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:01:14 CDT 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : fedora27.lab.local
+Process     : Player <7202>
+Thread      : spliced 7f4d6478c700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1521522074.639608296
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:01:14 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7202>
+Thread      : spliced 7f4d6478c700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522074.641250577
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:01:14 CDT 2018
+Description : SOAP service is reachable via port 39315
+Node        : fedora27.lab.local
+Process     : Player <7202>
+Thread      : cmsoap 7f4d5f75b700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1521522074.647311970
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:01:14 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7202>
+Thread      : cmsoap 7f4d5f75b700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522074.648574082
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:01:14 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7202>
+Thread      : ddsi2 7f4d5f048700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522074.669077682
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:01:15 CDT 2018
+Description : The durability service can by identified by ID: 617882534
+Node        : fedora27.lab.local
+Process     : Player <7202>
+Thread      : durability 7f4d5f3b7700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1521522075.278212769
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:02:25 CDT 2018
+Description : u_domainNew:Database allocated on heap
+Node        : fedora27.lab.local
+Process     : Player <7262>
+Thread      : spliced 7fbdd5814700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1521522145.493472047
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:02:25 CDT 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : fedora27.lab.local
+Process     : Player <7262>
+Thread      : spliced 7fbdd5814700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1521522145.503065471
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:02:25 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7262>
+Thread      : spliced 7fbdd5814700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522145.504169422
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:02:25 CDT 2018
+Description : SOAP service is reachable via port 37933
+Node        : fedora27.lab.local
+Process     : Player <7262>
+Thread      : cmsoap 7fbdd07e3700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1521522145.507403512
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:02:25 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7262>
+Thread      : cmsoap 7fbdd07e3700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522145.507762546
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:02:25 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7262>
+Thread      : ddsi2 7fbd97fff700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522145.514372474
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:02:26 CDT 2018
+Description : The durability service can by identified by ID: 1101745433
+Node        : fedora27.lab.local
+Process     : Player <7262>
+Thread      : durability 7fbdd0483700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1521522146.268013083
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:03:23 CDT 2018
+Description : u_domainNew:Database allocated on heap
+Node        : fedora27.lab.local
+Process     : Player <7358>
+Thread      : spliced 7f91fa7ef700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1521522203.747747939
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:03:23 CDT 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : fedora27.lab.local
+Process     : Player <7358>
+Thread      : spliced 7f91fa7ef700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1521522203.752257249
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:03:23 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7358>
+Thread      : spliced 7f91fa7ef700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522203.753393999
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:03:23 CDT 2018
+Description : SOAP service is reachable via port 33021
+Node        : fedora27.lab.local
+Process     : Player <7358>
+Thread      : cmsoap 7f91f57be700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1521522203.754803633
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:03:23 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7358>
+Thread      : cmsoap 7f91f57be700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522203.755280532
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:03:23 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7358>
+Thread      : ddsi2 7f91f50ef700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522203.761354741
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:03:24 CDT 2018
+Description : The durability service can by identified by ID: 333750272
+Node        : fedora27.lab.local
+Process     : Player <7358>
+Thread      : durability 7f91f545e700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1521522204.170295453
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:08:50 CDT 2018
+Description : u_domainNew:Database allocated on heap
+Node        : fedora27.lab.local
+Process     : Player <7495>
+Thread      : spliced 7fe073536700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1521522530.893916503
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:08:50 CDT 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : fedora27.lab.local
+Process     : Player <7495>
+Thread      : spliced 7fe073536700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1521522530.898976127
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:08:50 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7495>
+Thread      : spliced 7fe073536700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522530.899966127
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:08:50 CDT 2018
+Description : SOAP service is reachable via port 32951
+Node        : fedora27.lab.local
+Process     : Player <7495>
+Thread      : cmsoap 7fe06e505700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1521522530.901427877
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:08:50 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7495>
+Thread      : cmsoap 7fe06e505700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522530.904270155
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:08:50 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7495>
+Thread      : ddsi2 7fe06de36700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522530.907588865
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:08:50 CDT 2018
+Description : The durability service can by identified by ID: 1483287731
+Node        : fedora27.lab.local
+Process     : Player <7495>
+Thread      : durability 7fe06e1a5700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1521522530.911775061
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:10:07 CDT 2018
+Description : u_domainNew:Database allocated on heap
+Node        : fedora27.lab.local
+Process     : Player <7594>
+Thread      : spliced 7f20b26b4700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1521522607.124026427
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:10:07 CDT 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : fedora27.lab.local
+Process     : Player <7594>
+Thread      : spliced 7f20b26b4700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1521522607.129840417
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:10:07 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7594>
+Thread      : spliced 7f20b26b4700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522607.133126215
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:10:07 CDT 2018
+Description : SOAP service is reachable via port 33265
+Node        : fedora27.lab.local
+Process     : Player <7594>
+Thread      : cmsoap 7f20ad683700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1521522607.134782806
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:10:07 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7594>
+Thread      : cmsoap 7f20ad683700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522607.135348525
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:10:07 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7594>
+Thread      : ddsi2 7f20acfb4700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522607.141200474
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:10:07 CDT 2018
+Description : The durability service can by identified by ID: 1371022365
+Node        : fedora27.lab.local
+Process     : Player <7594>
+Thread      : durability 7f20ad323700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1521522607.454581510
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:10:14 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'durability' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7594>
+Thread      : durability 7f20ad323700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522614.518005280
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:10:17 CDT 2018
+Description : Termination request (signal 2) received from PID 7594 (self), UID 1000
+Node        : fedora27.lab.local
+Process     : Player <7594>
+Thread      : signalHandler 7f20ae19a700
+Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/503/0/1521522617.105622320
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:12:23 CDT 2018
+Description : u_domainNew:Database allocated on heap
+Node        : fedora27.lab.local
+Process     : Player <7698>
+Thread      : spliced 7f03935c7700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1521522743.758601917
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:12:23 CDT 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : fedora27.lab.local
+Process     : Player <7698>
+Thread      : spliced 7f03935c7700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1521522743.763623797
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:12:23 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7698>
+Thread      : spliced 7f03935c7700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522743.767803308
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:12:23 CDT 2018
+Description : SOAP service is reachable via port 41073
+Node        : fedora27.lab.local
+Process     : Player <7698>
+Thread      : cmsoap 7f038e596700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1521522743.770336530
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:12:23 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7698>
+Thread      : cmsoap 7f038e596700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522743.770785195
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:12:23 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7698>
+Thread      : ddsi2 7f038dec7700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522743.773994848
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:12:24 CDT 2018
+Description : The durability service can by identified by ID: 316526978
+Node        : fedora27.lab.local
+Process     : Player <7698>
+Thread      : durability 7f038e236700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1521522744.200989602
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:12:31 CDT 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'durability' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : fedora27.lab.local
+Process     : Player <7698>
+Thread      : durability 7f038e236700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1521522751.323645192
+========================================================================================
+Report      : INFO
+Date        : Tue Mar 20 00:12:33 CDT 2018
+Description : Termination request (signal 2) received from PID 7698 (self), UID 1000
+Node        : fedora27.lab.local
+Process     : Player <7698>
+Thread      : signalHandler 7f038f0ad700
+Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/503/0/1521522753.356306115
