@@ -4,6 +4,7 @@
 #include "DDSEntityManager.h"
 #include "ccpp_dds_dcps.h"
 #include "ccpp_UberCasino.h"
+#include "vortex_os.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Box.H>
@@ -50,6 +51,10 @@ public:
     DDSEntityManager mgr;
     PlayerSeq ps;
     SampleInfoSeq infoSeq;
+
+    os_time delay_2ms = { 0, 2000000 };
+    os_time delay_200ms = { 0, 200000000 };
+    
     //Create Participant
     mgr.createParticipant("UberCasino");
 
@@ -71,21 +76,26 @@ public:
 
     cout << "=== [Subscriber] Ready ..." << endl;
     bool found = false;
+    ReturnCode_t status = -1;
     
     //We don't want to read indefinitly so we will search until something is found
     while(!found)
     {
-      PlayerReader->take(ps, infoSeq, LENGTH_UNLIMITED,
+      status = PlayerReader->take(ps, infoSeq, LENGTH_UNLIMITED,
       ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
       
+      checkStatus(status, "PlayerDataReader::take");
       DDS::ULong i;
       for(i = 0; i < ps.length(); i++)
       {
 	cout << "=== [Subscriber] message received :" << endl;
 	found = true;
       }
+      status = PlayerReader->return_loan(ps, infoSeq);
+      checkStatus(status, "PlayerDataReader::return_loan");
+      os_nanoSleep(delay_200ms);
     }
-    PlayerReader->return_loan(ps, infoSeq);
+    os_nanoSleep(delay_2ms);
 
     /* Remove the DataReaders */
     mgr.deleteReader();
