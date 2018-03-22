@@ -7,6 +7,7 @@
 #include "vortex_os.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
+#include <FL/Fl_Button.H>
 #include <FL/Fl_Box.H>
 
 using namespace DDS;
@@ -17,7 +18,8 @@ class UCDealer{
   
 public:
   UCDealer();
-
+  Dealer d;
+  
   /*
   function to to act as publisher and write data passed in as parameter
   */
@@ -41,6 +43,9 @@ public:
     //Create Publisher
     mgr.createPublisher();
 
+    // create DataWriter :
+    // If autodispose_unregistered_instances is set to true (default value),
+    // you will have to start the subscriber before the publisher
     bool autodispose_unregistered_instances = false;
     mgr.createWriter(autodispose_unregistered_instances);
     
@@ -55,9 +60,9 @@ public:
     strcpy(GameInstance.dealer_uid, "2" );
     //GameWriter->register_instance(GameInstance);
  
-    cout << "=== [Publisher] writing a message containing :" << endl;
-    cout << "    game ID  : " << GameInstance.game_uid << endl;
-    cout << "    dealer ID : " << GameInstance.dealer_uid << endl;
+    cout << "=== [Dealer Publisher] writing a message containing :" << endl;
+    cout << "    Game ID   : " << GameInstance.game_uid << endl;
+    cout << "    Dealer ID : " << GameInstance.dealer_uid << endl;
 
     ReturnCode_t status = GameWriter->write(GameInstance,          DDS::HANDLE_NIL);
   checkStatus(status, "GameDataWriter::write");
@@ -74,6 +79,8 @@ public:
 
     /* Remove Participant. */
     mgr.deleteParticipant();
+    
+    cout << "=== [Dealer Publisher] exiting..." << endl;
   }
 
   /*
@@ -82,11 +89,59 @@ public:
   static void Subscribe()
   {
     DDSEntityManager mgr;
-    mgr.createParticipant("Dealer");
-    mgr.createSubscriber();
-    char topic_name[] = "UberCasinoData";
+    PlayerSeq ps;
+    SampleInfoSeq infoSeq;
+
+    os_time delay_2ms = { 0, 2000000 };
+    os_time delay_200ms = { 0, 200000000 };
+
+    //Create Participant
+    mgr.createParticipant("UberCasino");
+
+    //Create Type
+    PlayerTypeSupportInterface_var pts = new PlayerTypeSupport();
+    mgr.registerType(pts.in());
+
+    //Create Topic
+    char topic_name[] = "Player";
     mgr.createTopic(topic_name);
+
+    //Create Subscriber
+    mgr.createSubscriber();
+
+    //Create Reader
     mgr.createReader();
+
+    DataReader_var dr = mgr.getReader();  
+    PlayerDataReader_var PlayerReader = PlayerDataReader::_narrow(dr.in());
+    checkHandle(PlayerReader.in(), "PlayerDataReader::_narrow");
+
+    cout << "=== [Dealer Subscriber] Ready ..." << endl;
+    bool found = false;
+    ReturnCode_t status = -1;
+
+     //We don't want to read indefinitly so we will search until something is found
+    while(!found)
+    {
+      status = PlayerReader->take(ps, infoSeq, LENGTH_UNLIMITED,
+      ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
+      
+      checkStatus(status, "PlayerDataReader::take");
+      DDS::ULong i;
+      for(i = 0; i < ps.length(); i++)
+      {
+	cout << "=== [Dealer Subscriber] message received :" << endl;
+        cout << "    Player ID  : " << ps[i].uuid << endl;
+        cout << "    Player name : \"" << ps[i].name << "\"" << endl;
+	found = true;
+      }
+
+      status = PlayerReader->return_loan(ps, infoSeq);
+      checkStatus(status, "PlayerDataReader::return_loan");
+      os_nanoSleep(delay_200ms);
+    }
+    
+    os_nanoSleep(delay_2ms);
 
     /* Remove the DataReaders */
     mgr.deleteReader();
@@ -99,6 +154,8 @@ public:
 
     /* Remove Participant. */
     mgr.deleteParticipant();
+
+    cout << "=== [Dealer Subscriber] Closing ..." << endl;
   }
 
 };//end of class declaration
@@ -113,23 +170,17 @@ int main(int argc, char **argv)
 {
   //create new dealer
   UCDealer *d = new UCDealer();
-  d->Publish();
+
+  //Open a new Window to start Game
+  //d->Publish();
+  d->Subscribe();
+
   //start the game
   
   //while game is on publish and subscribe data
 
   //if game is finsihed ask to start new game or quit
-  /*
-  Fl_Window *window = new Fl_Window(340,180);
-  Fl_Box *box = new Fl_Box(20,40,300,100,"Hello, World!");
-  box->box(FL_UP_BOX);
-  box->labelfont(FL_BOLD+FL_ITALIC);
-  box->labelsize(36);
-  box->labeltype(FL_SHADOW_LABEL);
-  window->end();
-  window->show(argc, argv);
-  return Fl::run();
-*/
+
   return 0;
 }
 

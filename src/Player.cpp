@@ -17,6 +17,7 @@ class PlayerUC{
   
 public:
   PlayerUC();
+  Player p;
 
   /*
   function to to act as publisher and write data passed in as parameter
@@ -24,11 +25,46 @@ public:
   static void Publish()
   {
     DDSEntityManager mgr;
+
+    os_time delay_1s = { 1, 0 };
+
+    //Create Participant
     mgr.createParticipant("UberCasino");
-    mgr.createPublisher();
-    char topic_name[] = "Dealer";
+ 
+    //Create Type
+    PlayerTypeSupportInterface_var pts = new PlayerTypeSupport();
+    mgr.registerType(pts.in());
+
+    //Create Topic
+    char topic_name[] = "Player";
     mgr.createTopic(topic_name);
-    mgr.createWriter();
+
+    //Create Publisher
+    mgr.createPublisher();
+
+    // create DataWriter :
+    // If autodispose_unregistered_instances is set to true (default value),
+    // you will have to start the subscriber before the publisher
+    bool autodispose_unregistered_instances = false;
+    mgr.createWriter(autodispose_unregistered_instances);
+
+    //Publish Events
+    DataWriter_var dw = mgr.getWriter();  
+    PlayerDataWriter_var PlayerWriter = PlayerDataWriter::_narrow(dw.in());
+
+    checkHandle(PlayerWriter.in(), "PlayerDataWriter::_narrow");
+
+    Player PlayerInstance;
+    strcpy(PlayerInstance.uuid, "1" );
+    strcpy(PlayerInstance.name, "Player" );
+
+    cout << "=== [Player Publisher] writing a message containing :" << endl;
+    cout << "    Player ID   : " << PlayerInstance.uuid << endl;
+    cout << "    Player name : " << PlayerInstance.name << endl;
+
+    ReturnCode_t status = PlayerWriter->write(PlayerInstance,          DDS::HANDLE_NIL);
+  checkStatus(status, "PlayerDataWriter::write");
+  os_nanoSleep(delay_1s);
 
     /* Remove the DataWriters */
     mgr.deleteWriter();
@@ -41,6 +77,8 @@ public:
 
     /* Remove Participant. */
     mgr.deleteParticipant();
+
+    cout << "=== [Player Publisher] exiting..." << endl;
   }
 
   /*
@@ -76,7 +114,7 @@ public:
     GameDataReader_var GameReader = GameDataReader::_narrow(dr.in());
     checkHandle(GameReader.in(), "GameDataReader::_narrow");
 
-    cout << "=== [Subscriber] Ready ..." << endl;
+    cout << "=== [Player Subscriber] Ready ..." << endl;
     bool found = false;
     ReturnCode_t status = -1;
     
@@ -90,8 +128,9 @@ public:
       DDS::ULong i;
       for(i = 0; i < ps.length(); i++)
       {
-	cout << "=== [Subscriber] message received :" << endl;
-        //cout << "    DealerID  : " << ps[i].dealer_uid << endl;
+	cout << "=== [Player Subscriber] message received :" << endl;
+        cout << "    Game ID   : " << ps[i].game_uid << endl;
+        cout << "    Dealer ID : " << ps[i].dealer_uid << endl;
 	found = true;
       }
 
@@ -113,7 +152,8 @@ public:
 
     /* Remove Participant. */
     mgr.deleteParticipant();
-    cout << "=== [Subscriber] Closing ..." << endl;
+
+    cout << "=== [Player Subscriber] Closing ..." << endl;
   }
 
 };//end of class declaration
@@ -132,23 +172,14 @@ int main (int argc, char **argv)
 
   //create new player
   PlayerUC *p = new PlayerUC();
-  p->Subscribe();
+  //p->Subscribe();
+  p->Publish();
   //start the game
   
   //while game is on publish and subscribe data
 
   //if game is finsihed ask to start new game or quit
-  /*
-  Fl_Window *window = new Fl_Window(340,180);
-  Fl_Box *box = new Fl_Box(20,40,300,100,"Hello, World!");
-  box->box(FL_UP_BOX);
-  box->labelfont(FL_BOLD+FL_ITALIC);
-  box->labelsize(36);
-  box->labeltype(FL_SHADOW_LABEL);
-  window->end();
-  window->show(argc, argv);
-  return Fl::run();
-*/
+ 
   return 0;
 }
 
