@@ -24,9 +24,9 @@ public:
   static void Publish()
   {
     DDSEntityManager mgr;
-    mgr.createParticipant("Player");
+    mgr.createParticipant("UberCasino");
     mgr.createPublisher();
-    char topic_name[] = "UberCasinoData";
+    char topic_name[] = "Dealer";
     mgr.createTopic(topic_name);
     mgr.createWriter();
 
@@ -49,7 +49,7 @@ public:
   static void Subscribe()
   {
     DDSEntityManager mgr;
-    PlayerSeq ps;
+    GameSeq ps;
     SampleInfoSeq infoSeq;
 
     os_time delay_2ms = { 0, 2000000 };
@@ -58,21 +58,23 @@ public:
     //Create Participant
     mgr.createParticipant("UberCasino");
 
+    //Create Type
+    GameTypeSupportInterface_var pts = new GameTypeSupport();
+    mgr.registerType(pts.in());
+
+    //Create Topic
+    char topic_name[] = "Game";
+    mgr.createTopic(topic_name);
+
     //Create Subscriber
     mgr.createSubscriber();
-    PlayerTypeSupportInterface_var pts = new PlayerTypeSupport();
-    mgr.registerType(pts.in());
-    
-    //Create Topic
-    char topic_name[] = "Dealer";
-    mgr.createTopic(topic_name);
 
     //Create Reader
     mgr.createReader();
 
     DataReader_var dr = mgr.getReader();  
-    PlayerDataReader_var PlayerReader = PlayerDataReader::_narrow(dr.in());
-    checkHandle(PlayerReader.in(), "PlayerDataReader::_narrow");
+    GameDataReader_var GameReader = GameDataReader::_narrow(dr.in());
+    checkHandle(GameReader.in(), "GameDataReader::_narrow");
 
     cout << "=== [Subscriber] Ready ..." << endl;
     bool found = false;
@@ -81,20 +83,23 @@ public:
     //We don't want to read indefinitly so we will search until something is found
     while(!found)
     {
-      status = PlayerReader->take(ps, infoSeq, LENGTH_UNLIMITED,
+      status = GameReader->take(ps, infoSeq, LENGTH_UNLIMITED,
       ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
       
-      checkStatus(status, "PlayerDataReader::take");
+      checkStatus(status, "GameDataReader::take");
       DDS::ULong i;
       for(i = 0; i < ps.length(); i++)
       {
 	cout << "=== [Subscriber] message received :" << endl;
+        //cout << "    DealerID  : " << ps[i].dealer_uid << endl;
 	found = true;
       }
-      status = PlayerReader->return_loan(ps, infoSeq);
-      checkStatus(status, "PlayerDataReader::return_loan");
+
+      status = GameReader->return_loan(ps, infoSeq);
+      checkStatus(status, "GameDataReader::return_loan");
       os_nanoSleep(delay_200ms);
     }
+
     os_nanoSleep(delay_2ms);
 
     /* Remove the DataReaders */
@@ -119,7 +124,7 @@ PlayerUC::PlayerUC()
 }
 
 /** MAIN FUNCTION **/
-int main(int argc, char **argv) 
+int main (int argc, char **argv) 
 {
   // dummy test to recieve data from Dealer  
 
@@ -146,4 +151,5 @@ int main(int argc, char **argv)
 */
   return 0;
 }
+
 

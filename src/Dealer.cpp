@@ -4,6 +4,7 @@
 #include "DDSEntityManager.h"
 #include "ccpp_dds_dcps.h"
 #include "ccpp_UberCasino.h"
+#include "vortex_os.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Box.H>
@@ -15,8 +16,7 @@ using namespace std;
 class UCDealer{
   
 public:
-  UCDealer(){
-  }
+  UCDealer();
 
   /*
   function to to act as publisher and write data passed in as parameter
@@ -24,11 +24,44 @@ public:
   static void Publish()
   {
     DDSEntityManager mgr;
-    mgr.createParticipant("Dealer");
-    mgr.createPublisher();
-    char topic_name[] = "UberCasinoData";
+
+    os_time delay_1s = { 1, 0 };
+    
+    //Create Participant
+    mgr.createParticipant("UberCasino");
+
+    //Create Type
+    GameTypeSupportInterface_var pts = new GameTypeSupport();
+    mgr.registerType(pts.in());
+
+    //Create Topic
+    char topic_name[] = "Game";
     mgr.createTopic(topic_name);
-    mgr.createWriter();
+
+    //Create Publisher
+    mgr.createPublisher();
+
+    bool autodispose_unregistered_instances = false;
+    mgr.createWriter(autodispose_unregistered_instances);
+    
+    //Publish Events
+    DataWriter_var dw = mgr.getWriter();  
+    GameDataWriter_var GameWriter = GameDataWriter::_narrow(dw.in());
+
+    checkHandle(GameWriter.in(), "GameDataWriter::_narrow");
+
+    Game GameInstance;
+    strcpy(GameInstance.game_uid, "1" );
+    strcpy(GameInstance.dealer_uid, "2" );
+    //GameWriter->register_instance(GameInstance);
+ 
+    cout << "=== [Publisher] writing a message containing :" << endl;
+    cout << "    game ID  : " << GameInstance.game_uid << endl;
+    cout << "    dealer ID : " << GameInstance.dealer_uid << endl;
+
+    ReturnCode_t status = GameWriter->write(GameInstance,          DDS::HANDLE_NIL);
+  checkStatus(status, "GameDataWriter::write");
+  os_nanoSleep(delay_1s);
 
     /* Remove the DataWriters */
     mgr.deleteWriter();
@@ -70,11 +103,17 @@ public:
 
 };//end of class declaration
 
+UCDealer::UCDealer()
+{
+
+}
+
 /** MAIN FUNCTION **/
 int main(int argc, char **argv) 
 {
   //create new dealer
- 
+  UCDealer *d = new UCDealer();
+  d->Publish();
   //start the game
   
   //while game is on publish and subscribe data
@@ -93,4 +132,5 @@ int main(int argc, char **argv)
 */
   return 0;
 }
+
 
