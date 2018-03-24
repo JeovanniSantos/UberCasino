@@ -16,14 +16,44 @@ using namespace std;
 
 class UCDealer{
   
+private:
+    Dealer d;
+    Game g;
 public:
-  UCDealer();
-  Dealer d;
+  UCDealer(){
+
+  }
   
-  /*
+  /*** Function to Setup Dealer ***/
+  void SetDealer(){
+    strcpy(d.uuid, "1");
+    strcpy(d.name, "Test Dealer");
+    strcpy(d.game_uuid, "12345");
+  }
+
+  /*** Function to Setup Game Setting ***/
+  void SetGame(){
+    g.gstate = waiting_to_join;
+    strcpy(g.game_uid, d.game_uuid);
+    strcpy(g.dealer_uid, d.uuid);
+  }
+
+  /*** Function to get the Dealer struct ***/
+  Dealer GetDealer(){
+    return d;
+  }
+
+  /*** Function to get the Game Struct ***/
+  Game GetGame(){
+    return g;
+  }
+
+};//end of class declaration
+
+/*
   function to to act as publisher and write data passed in as parameter
   */
-  static void Publish()
+  void Publish(char* action, UCDealer d)
   {
     DDSEntityManager mgr;
 
@@ -32,12 +62,18 @@ public:
     //Create Participant
     mgr.createParticipant("UberCasino");
 
-    //Create Type
-    GameTypeSupportInterface_var pts = new GameTypeSupport();
-    mgr.registerType(pts.in());
-
+    //Create Type based on action
+    if(strcmp("Game", action) == 0){
+      GameTypeSupportInterface_var pts = new GameTypeSupport();
+      mgr.registerType(pts.in());
+    }
+    else if(strcmp("Player", action) == 0){
+      PlayerTypeSupportInterface_var pts = new PlayerTypeSupport();
+      mgr.registerType(pts.in());
+    }
+    
     //Create Topic
-    char topic_name[] = "Game";
+    char *topic_name = action;
     mgr.createTopic(topic_name);
 
     //Create Publisher
@@ -49,24 +85,34 @@ public:
     bool autodispose_unregistered_instances = false;
     mgr.createWriter(autodispose_unregistered_instances);
     
-    //Publish Events
-    DataWriter_var dw = mgr.getWriter();  
-    GameDataWriter_var GameWriter = GameDataWriter::_narrow(dw.in());
-
-    checkHandle(GameWriter.in(), "GameDataWriter::_narrow");
-
+    //Publish Events based on action 
+    DataWriter_var dw = mgr.getWriter(); 
+    GameDataWriter_var GameWriter;
     Game GameInstance;
-    strcpy(GameInstance.game_uid, "1" );
-    strcpy(GameInstance.dealer_uid, "2" );
-    //GameWriter->register_instance(GameInstance);
- 
-    cout << "=== [Dealer Publisher] writing a message containing :" << endl;
-    cout << "    Game ID   : " << GameInstance.game_uid << endl;
-    cout << "    Dealer ID : " << GameInstance.dealer_uid << endl;
+    Player PlayerInstance;
+    PlayerDataWriter_var PlayerWriter;
 
-    ReturnCode_t status = GameWriter->write(GameInstance,          DDS::HANDLE_NIL);
-  checkStatus(status, "GameDataWriter::write");
-  os_nanoSleep(delay_1s);
+    if(strcmp("Game", action) == 0){
+      GameWriter = GameDataWriter::_narrow(dw.in());
+      checkHandle(GameWriter.in(), "GameDataWriter::_narrow");
+      GameInstance = d.GetGame();
+      
+      cout << "=== [Dealer Publisher] writing a message containing :" << endl;
+      cout << "    Game ID   : " << GameInstance.game_uid << endl;
+      cout << "    Dealer ID : " << GameInstance.dealer_uid << endl;
+
+      ReturnCode_t status = GameWriter->write(GameInstance,          DDS::HANDLE_NIL);
+      checkStatus(status, "GameDataWriter::write");
+    }
+    else if(strcmp("player", action) == 0){
+      PlayerWriter = PlayerDataWriter::_narrow(dw.in());
+      checkHandle(PlayerWriter.in(), "PlayerDataWriter::_narrow");
+      
+      ReturnCode_t status = PlayerWriter->write(PlayerInstance,          DDS::HANDLE_NIL);
+      checkStatus(status, "PlayerDataWriter::write");
+    }
+
+    os_nanoSleep(delay_1s);
 
     /* Remove the DataWriters */
     mgr.deleteWriter();
@@ -158,22 +204,31 @@ public:
     cout << "=== [Dealer Subscriber] Closing ..." << endl;
   }
 
-};//end of class declaration
-
-UCDealer::UCDealer()
-{
-
-}
 
 /** MAIN FUNCTION **/
 int main(int argc, char **argv) 
 {
-  //create new dealer
-  UCDealer *d = new UCDealer();
+  /*Open a new Window to start Game for Dealer 
+    Window will ask dealer for input 
+    a button will determine if Dealer progresses to a new game
+  */
+  //bool startGame = false;
 
-  //Open a new Window to start Game
-  //d->Publish();
-  d->Subscribe();
+  //create new dealer with input information
+  UCDealer *d = new UCDealer();
+  d->SetDealer();
+  d->SetGame();
+
+  char game[] = "Game";
+  char player[] = "Player";
+  os_time delay_5s = { 5, 0 };
+  while(1){
+    Publish(game, *d);
+    Subscribe();
+    os_nanoSleep(delay_5s);
+  }
+  
+  
 
   //start the game
   

@@ -15,11 +15,30 @@ using namespace std;
 
 class PlayerUC{
   
-public:
-  PlayerUC();
+private:
   Player p;
 
-  /*
+public:
+  PlayerUC(){
+
+  }
+
+  /*** Function to Setup Player ***/
+  void SetPlayer(){
+    strcpy(p.uuid, "123");
+    strcpy(p.name, "TestPlayer");
+    p.balance = 500;
+    p.A = idle;
+  }
+
+  /*** Function to get the Player Struct ***/
+  Player GetPlayer(){
+    return p;
+  }
+
+};//end of class declaration
+
+/*
   function to to act as publisher and write data passed in as parameter
   */
   static void Publish()
@@ -84,10 +103,11 @@ public:
   /*
   function to to act as subscriber and read data passed in as parameter
   */
-  static void Subscribe()
+  static void Subscribe(char* action, PlayerUC p)
   {
     DDSEntityManager mgr;
-    GameSeq ps;
+    GameSeq gs;
+    PlayerSeq ps;
     SampleInfoSeq infoSeq;
 
     os_time delay_2ms = { 0, 2000000 };
@@ -96,12 +116,18 @@ public:
     //Create Participant
     mgr.createParticipant("UberCasino");
 
-    //Create Type
-    GameTypeSupportInterface_var pts = new GameTypeSupport();
-    mgr.registerType(pts.in());
+    //Create Type based on action 
+    if(strcmp("Game", action) == 0){
+      GameTypeSupportInterface_var pts = new GameTypeSupport();
+      mgr.registerType(pts.in());
+    }
+    else if(strcmp("Player", action) == 0){
+      PlayerTypeSupportInterface_var pts = new PlayerTypeSupport();
+      mgr.registerType(pts.in());
+    }
 
     //Create Topic
-    char topic_name[] = "Game";
+    char *topic_name = action;
     mgr.createTopic(topic_name);
 
     //Create Subscriber
@@ -111,33 +137,64 @@ public:
     mgr.createReader();
 
     DataReader_var dr = mgr.getReader();  
-    GameDataReader_var GameReader = GameDataReader::_narrow(dr.in());
-    checkHandle(GameReader.in(), "GameDataReader::_narrow");
+    GameDataReader_var GameReader;
+    PlayerDataReader_var PlayerReader;
 
     cout << "=== [Player Subscriber] Ready ..." << endl;
     bool found = false;
     ReturnCode_t status = -1;
-    
-    //We don't want to read indefinitly so we will search until something is found
-    while(!found)
-    {
-      status = GameReader->take(ps, infoSeq, LENGTH_UNLIMITED,
-      ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
-      
-      checkStatus(status, "GameDataReader::take");
-      DDS::ULong i;
-      for(i = 0; i < ps.length(); i++)
-      {
-	cout << "=== [Player Subscriber] message received :" << endl;
-        cout << "    Game ID   : " << ps[i].game_uid << endl;
-        cout << "    Dealer ID : " << ps[i].dealer_uid << endl;
-	found = true;
-      }
 
-      status = GameReader->return_loan(ps, infoSeq);
-      checkStatus(status, "GameDataReader::return_loan");
-      os_nanoSleep(delay_200ms);
-    }
+    if(strcmp("Game", action) == 0){
+      GameReader = GameDataReader::_narrow(dr.in());
+      checkHandle(GameReader.in(), "GameDataReader::_narrow");
+
+      //We don't want to read indefinitly so we will search until something is found
+      while(!found)
+      {
+        status = GameReader->take(gs, infoSeq, LENGTH_UNLIMITED,
+        ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
+      
+        checkStatus(status, "GameDataReader::take");
+        DDS::ULong i;
+        for(i = 0; i < gs.length(); i++)
+        {
+	  cout << "=== [Player Subscriber] message received :" << endl;
+          cout << "    Game ID   : " << gs[i].game_uid << endl;
+          cout << "    Dealer ID : " << gs[i].dealer_uid << endl;
+	  found = true;
+        }
+
+        status = GameReader->return_loan(gs, infoSeq);
+        checkStatus(status, "GameDataReader::return_loan");
+        os_nanoSleep(delay_200ms);
+      }
+    } 
+    else if(strcmp("Player", action) == 0){
+      PlayerReader = PlayerDataReader::_narrow(dr.in());
+      checkHandle(PlayerReader.in(), "PlaerDataReader::_narrow");
+
+      //We don't want to read indefinitly so we will search until something is found
+      while(!found)
+      {
+        status = PlayerReader->take(ps, infoSeq, LENGTH_UNLIMITED,
+        ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
+      
+        checkStatus(status, "PlayerDataReader::take");
+        DDS::ULong i;
+        for(i = 0; i < ps.length(); i++)
+        {
+	  cout << "=== [Player Subscriber] message received :" << endl;
+          cout << "    Player ID   : " << ps[i].uuid << endl;
+          cout << "    Player name : " << ps[i].name << endl;
+	  found = true;
+        }
+
+        status = PlayerReader->return_loan(ps, infoSeq);
+        checkStatus(status, "PlayerDataReader::return_loan");
+        os_nanoSleep(delay_200ms);
+      }
+   }
+   
 
     os_nanoSleep(delay_2ms);
 
@@ -156,24 +213,29 @@ public:
     cout << "=== [Player Subscriber] Closing ..." << endl;
   }
 
-};//end of class declaration
-
-PlayerUC::PlayerUC()
-{
-
-}
-
 /** MAIN FUNCTION **/
 int main (int argc, char **argv) 
 {
-  // dummy test to recieve data from Dealer  
+  /*Open a new Window to start Game for Player 
+    Window will ask Player for input 
+    a button will determine if Dealer progresses to a new game
+  */
+  //bool startGame = false;
+  //bool active = false;
 
-  // run indefinitely
-
-  //create new player
+  //create new player with input information
   PlayerUC *p = new PlayerUC();
-  //p->Subscribe();
-  p->Publish();
+  p->SetPlayer();
+  
+  char game[] = "Game";
+  char player[] = "Player";
+  os_time delay_5s = { 5, 0 };
+  while(1){
+    Subscribe(game, *p);
+    //wait 5 secs
+    os_nanoSleep(delay_5s);
+    Publish();
+  }
   //start the game
   
   //while game is on publish and subscribe data
