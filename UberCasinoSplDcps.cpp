@@ -119,6 +119,16 @@ __UberCasino_Player__copyIn(
         _DestType *dest = &to->name;
         memcpy (dest, from->name, sizeof (*dest));
     }
+    {
+        typedef c_char _DestType[8];
+        _DestType *dest = &to->game_uid;
+        memcpy (dest, from->game_uid, sizeof (*dest));
+    }
+    {
+        typedef c_char _DestType[8];
+        _DestType *dest = &to->dealer_uid;
+        memcpy (dest, from->dealer_uid, sizeof (*dest));
+    }
     to->balance = (c_float)from->balance;
 #ifdef OSPL_BOUNDS_CHECK
     if((((c_long)from->A) >= 0) && (((c_long)from->A) < 5) ){
@@ -284,6 +294,18 @@ __UberCasino_Player__copyOut(
         _DestType *src = &from->name;
 
         memcpy (to->name, src, sizeof (*src));
+    }
+    {
+        typedef c_char _DestType[8];
+        _DestType *src = &from->game_uid;
+
+        memcpy (to->game_uid, src, sizeof (*src));
+    }
+    {
+        typedef c_char _DestType[8];
+        _DestType *src = &from->dealer_uid;
+
+        memcpy (to->dealer_uid, src, sizeof (*src));
     }
     to->balance = (::DDS::Float)from->balance;
     to->A = (::UberCasino::player_action_t)from->A;

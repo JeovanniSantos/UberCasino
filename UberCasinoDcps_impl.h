@@ -349,6 +349,344 @@ namespace UberCasino {
         void operator= (const PlayerDataReaderView &);
     };
     
+    class  DealerTypeSupportFactory : public ::DDS::TypeSupportFactory_impl
+    {
+    public:
+        DealerTypeSupportFactory() {}
+        virtual ~DealerTypeSupportFactory() {}
+    private:
+        ::DDS::DataWriter_ptr
+        create_datawriter (gapi_dataWriter handle);
+    
+        ::DDS::DataReader_ptr
+        create_datareader (gapi_dataReader handle);
+    
+        ::DDS::DataReaderView_ptr
+        create_view (gapi_dataReaderView handle);
+    };
+    
+    class  DealerTypeSupport : public virtual DealerTypeSupportInterface,
+                                   public ::DDS::TypeSupport_impl
+    {
+    public:
+        virtual ::DDS::ReturnCode_t register_type(
+            ::DDS::DomainParticipant_ptr participant,
+            const char * type_name) THROW_ORB_EXCEPTIONS;
+    
+        virtual char * get_type_name() THROW_ORB_EXCEPTIONS;
+    
+        DealerTypeSupport (void);
+        virtual ~DealerTypeSupport (void);
+    
+    private:
+        DealerTypeSupport (const DealerTypeSupport &);
+        void operator= (const DealerTypeSupport &);
+    
+        static const char *metaDescriptor[];
+        static const ::DDS::ULong metaDescriptorArrLength;
+    };
+    
+    typedef DealerTypeSupportInterface_var DealerTypeSupport_var;
+    typedef DealerTypeSupportInterface_ptr DealerTypeSupport_ptr;
+    
+    class  DealerDataWriter_impl : public virtual DealerDataWriter,
+                                        public ::DDS::DataWriter_impl
+    {
+    public:
+    
+        virtual ::DDS::InstanceHandle_t register_instance(
+            const Dealer & instance_data) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::InstanceHandle_t register_instance_w_timestamp(
+            const Dealer & instance_data,
+            const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t unregister_instance(
+            const Dealer & instance_data,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp(
+            const Dealer & instance_data,
+            ::DDS::InstanceHandle_t handle,
+            const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t write(
+            const Dealer & instance_data,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t write_w_timestamp(
+            const Dealer & instance_data,
+            ::DDS::InstanceHandle_t handle,
+            const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t dispose(
+            const Dealer & instance_data,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t dispose_w_timestamp(
+            const Dealer & instance_data,
+            ::DDS::InstanceHandle_t handle,
+            const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t writedispose(
+            const Dealer & instance_data,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t writedispose_w_timestamp(
+            const Dealer & instance_data,
+            ::DDS::InstanceHandle_t handle,
+            const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t get_key_value(
+            Dealer & key_holder,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::InstanceHandle_t lookup_instance(
+            const Dealer & instance_data) THROW_ORB_EXCEPTIONS;
+    
+    
+        DealerDataWriter_impl (
+            gapi_dataWriter handle
+        );
+    
+        virtual ~DealerDataWriter_impl (void);
+    
+    private:
+        DealerDataWriter_impl(const DealerDataWriter_impl &);
+        void operator= (const DealerDataWriter &);
+    };
+    
+    class  DealerDataReader_impl : public virtual DealerDataReader,
+                                        public ::DDS::DataReader_impl
+    {
+        friend class DealerDataReaderView_impl;
+    public:
+        virtual ::DDS::ReturnCode_t read(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_w_condition(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_w_condition(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_sample(
+            Dealer & received_data,
+            ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_sample(
+            Dealer & received_data,
+            ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_instance(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_instance(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_instance(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_instance(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_instance_w_condition(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_instance_w_condition(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t return_loan(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t get_key_value(
+            Dealer & key_holder,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::InstanceHandle_t lookup_instance(
+            const Dealer & instance) THROW_ORB_EXCEPTIONS;
+    
+        DealerDataReader_impl (
+            gapi_dataReader handle
+        );
+    
+        virtual ~DealerDataReader_impl(void);
+    
+    private:
+        DealerDataReader_impl(const DealerDataReader &);
+        void operator= (const DealerDataReader &);
+    
+        static ::DDS::ReturnCode_t check_preconditions(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples
+        );
+    };
+    
+    class  DealerDataReaderView_impl : public virtual DealerDataReaderView,
+                                        public ::DDS::DataReaderView_impl
+    {
+    public:
+        virtual ::DDS::ReturnCode_t read(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_w_condition(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_w_condition(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_sample(
+            Dealer & received_data,
+            ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_sample(
+            Dealer & received_data,
+            ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_instance(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_instance(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_instance(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_instance(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_instance_w_condition(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_instance_w_condition(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t return_loan(
+            DealerSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t get_key_value(
+            Dealer & key_holder,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::InstanceHandle_t lookup_instance(
+            const Dealer & instance) THROW_ORB_EXCEPTIONS;
+    
+        DealerDataReaderView_impl (
+            gapi_dataReader handle
+        );
+    
+        virtual ~DealerDataReaderView_impl(void);
+    
+    private:
+        DealerDataReaderView_impl(const DealerDataReaderView &);
+        void operator= (const DealerDataReaderView &);
+    };
+    
     class  GameTypeSupportFactory : public ::DDS::TypeSupportFactory_impl
     {
     public:

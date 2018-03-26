@@ -26,6 +26,8 @@ module UberCasino {
     {
        char uuid[8];    // A unique ID for a player
        char name[32];   // The players human name
+       char game_uid[8];  // the game currently being played
+       char dealer_uid[8];
        float balance;   // The funds currently beloging to the player
        player_action_t A; // The action the player is taking
     };
@@ -41,6 +43,7 @@ module UberCasino {
        char name[32];
        char game_uuid[8];  // the game currently being played
    };
+#pragma keylist Dealer
 
    struct PlayerState
    {

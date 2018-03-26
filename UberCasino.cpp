@@ -4,7 +4,7 @@
 //  
 //  File name: UberCasino.cpp
 //  Source: idl/UberCasino.idl
-//  Generated: Fri Mar 23 00:59:51 2018
+//  Generated: Sun Mar 25 23:09:36 2018
 //  OpenSplice V6.4.140320OSS
 //  
 //******************************************************************
@@ -494,6 +494,114 @@ UberCasino::Dealer::_uuid_slice * UberCasino::Dealer::_uuid_dup
 {
    _uuid_slice * to = _uuid_alloc ();
    _uuid_copy (to, from);
+   return to;
+}
+
+
+#if DDS_USE_EXPLICIT_TEMPLATES
+template class DDS_DCPS_FArray_var< UberCasino::Player::_dealer_uid, UberCasino::Player::_dealer_uid_slice, struct UberCasino::Player::_dealer_uid_uniq_>;
+template class DDS_DCPS_Array_forany< UberCasino::Player::_dealer_uid, UberCasino::Player::_dealer_uid_slice, struct UberCasino::Player::_dealer_uid_uniq_>;
+#endif
+
+template <>
+UberCasino::Player::_dealer_uid_slice* DDS_DCPS_ArrayHelper < UberCasino::Player::_dealer_uid, UberCasino::Player::_dealer_uid_slice, UberCasino::Player::_dealer_uid_uniq_>::alloc ()
+{
+   return UberCasino::Player::_dealer_uid_alloc ();
+}
+
+template <>
+void DDS_DCPS_ArrayHelper < UberCasino::Player::_dealer_uid, UberCasino::Player::_dealer_uid_slice, UberCasino::Player::_dealer_uid_uniq_>::copy (UberCasino::Player::_dealer_uid_slice *to, const UberCasino::Player::_dealer_uid_slice* from)
+{
+   UberCasino::Player::_dealer_uid_copy (to, from);
+}
+
+template <>
+void DDS_DCPS_ArrayHelper < UberCasino::Player::_dealer_uid, UberCasino::Player::_dealer_uid_slice, UberCasino::Player::_dealer_uid_uniq_>::free (UberCasino::Player::_dealer_uid_slice *ptr)
+{
+   UberCasino::Player::_dealer_uid_free (ptr);
+}
+
+UberCasino::Player::_dealer_uid_slice * UberCasino::Player::_dealer_uid_alloc ()
+{
+   DDS::Char * ret = (DDS::Char*) new DDS::Char [8];
+   return (_dealer_uid_slice *) ret;
+}
+
+void UberCasino::Player::_dealer_uid_free (_dealer_uid_slice * s)
+{
+   delete [] s;
+}
+
+void UberCasino::Player::_dealer_uid_copy
+(
+   _dealer_uid_slice * to,
+   const _dealer_uid_slice * from
+)
+{
+   const DDS::Char* sv = ( const DDS::Char*) from;
+   DDS::Char* tv = (DDS::Char*) to;
+   for (DDS::ULong i = 0; i < 8; i++) tv[i] = sv[i];
+}
+
+UberCasino::Player::_dealer_uid_slice * UberCasino::Player::_dealer_uid_dup
+   (const _dealer_uid_slice * from)
+{
+   _dealer_uid_slice * to = _dealer_uid_alloc ();
+   _dealer_uid_copy (to, from);
+   return to;
+}
+
+
+#if DDS_USE_EXPLICIT_TEMPLATES
+template class DDS_DCPS_FArray_var< UberCasino::Player::_game_uid, UberCasino::Player::_game_uid_slice, struct UberCasino::Player::_game_uid_uniq_>;
+template class DDS_DCPS_Array_forany< UberCasino::Player::_game_uid, UberCasino::Player::_game_uid_slice, struct UberCasino::Player::_game_uid_uniq_>;
+#endif
+
+template <>
+UberCasino::Player::_game_uid_slice* DDS_DCPS_ArrayHelper < UberCasino::Player::_game_uid, UberCasino::Player::_game_uid_slice, UberCasino::Player::_game_uid_uniq_>::alloc ()
+{
+   return UberCasino::Player::_game_uid_alloc ();
+}
+
+template <>
+void DDS_DCPS_ArrayHelper < UberCasino::Player::_game_uid, UberCasino::Player::_game_uid_slice, UberCasino::Player::_game_uid_uniq_>::copy (UberCasino::Player::_game_uid_slice *to, const UberCasino::Player::_game_uid_slice* from)
+{
+   UberCasino::Player::_game_uid_copy (to, from);
+}
+
+template <>
+void DDS_DCPS_ArrayHelper < UberCasino::Player::_game_uid, UberCasino::Player::_game_uid_slice, UberCasino::Player::_game_uid_uniq_>::free (UberCasino::Player::_game_uid_slice *ptr)
+{
+   UberCasino::Player::_game_uid_free (ptr);
+}
+
+UberCasino::Player::_game_uid_slice * UberCasino::Player::_game_uid_alloc ()
+{
+   DDS::Char * ret = (DDS::Char*) new DDS::Char [8];
+   return (_game_uid_slice *) ret;
+}
+
+void UberCasino::Player::_game_uid_free (_game_uid_slice * s)
+{
+   delete [] s;
+}
+
+void UberCasino::Player::_game_uid_copy
+(
+   _game_uid_slice * to,
+   const _game_uid_slice * from
+)
+{
+   const DDS::Char* sv = ( const DDS::Char*) from;
+   DDS::Char* tv = (DDS::Char*) to;
+   for (DDS::ULong i = 0; i < 8; i++) tv[i] = sv[i];
+}
+
+UberCasino::Player::_game_uid_slice * UberCasino::Player::_game_uid_dup
+   (const _game_uid_slice * from)
+{
+   _game_uid_slice * to = _game_uid_alloc ();
+   _game_uid_copy (to, from);
    return to;
 }
 

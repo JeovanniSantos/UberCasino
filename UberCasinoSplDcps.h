@@ -65,6 +65,8 @@ extern  void __UberCasino_Player__copyOut(void *_from, void *_to);
 struct _UberCasino_Player {
     c_char uuid[8];
     c_char name[32];
+    c_char game_uid[8];
+    c_char dealer_uid[8];
     c_float balance;
     enum _UberCasino_player_action_t A;
 };

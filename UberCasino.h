@@ -4,7 +4,7 @@
 //  
 //  File name: UberCasino.h
 //  Source: idl/UberCasino.idl
-//  Generated: Fri Mar 23 00:59:51 2018
+//  Generated: Sun Mar 25 23:09:36 2018
 //  OpenSplice V6.4.140320OSS
 //  
 //******************************************************************
@@ -89,8 +89,32 @@ namespace UberCasino
          struct _name_uniq_ {};
          typedef DDS_DCPS_FArray_var< _name, _name_slice, struct _name_uniq_> _name_var;
          typedef DDS_DCPS_Array_forany< _name, _name_slice, struct _name_uniq_> _name_forany;
+         typedef DDS::Char _game_uid_slice;
+         typedef DDS::Char _game_uid[8];
+         typedef _game_uid _game_uid_out;
+         static _game_uid_slice * _game_uid_alloc ();
+         static void _game_uid_free (_game_uid_slice *);
+         static void _game_uid_copy (_game_uid_slice* to, const _game_uid_slice* from);
+         static _game_uid_slice *_game_uid_dup (const _game_uid_slice* from);
+
+         struct _game_uid_uniq_ {};
+         typedef DDS_DCPS_FArray_var< _game_uid, _game_uid_slice, struct _game_uid_uniq_> _game_uid_var;
+         typedef DDS_DCPS_Array_forany< _game_uid, _game_uid_slice, struct _game_uid_uniq_> _game_uid_forany;
+         typedef DDS::Char _dealer_uid_slice;
+         typedef DDS::Char _dealer_uid[8];
+         typedef _dealer_uid _dealer_uid_out;
+         static _dealer_uid_slice * _dealer_uid_alloc ();
+         static void _dealer_uid_free (_dealer_uid_slice *);
+         static void _dealer_uid_copy (_dealer_uid_slice* to, const _dealer_uid_slice* from);
+         static _dealer_uid_slice *_dealer_uid_dup (const _dealer_uid_slice* from);
+
+         struct _dealer_uid_uniq_ {};
+         typedef DDS_DCPS_FArray_var< _dealer_uid, _dealer_uid_slice, struct _dealer_uid_uniq_> _dealer_uid_var;
+         typedef DDS_DCPS_Array_forany< _dealer_uid, _dealer_uid_slice, struct _dealer_uid_uniq_> _dealer_uid_forany;
          _uuid uuid;
          _name name;
+         _game_uid game_uid;
+         _dealer_uid dealer_uid;
          DDS::Float balance;
          player_action_t A;
    };
@@ -247,6 +271,18 @@ template <>
 void DDS_DCPS_ArrayHelper < UberCasino::Player::_name, UberCasino::Player::_name_slice, UberCasino::Player::_name_uniq_>::copy (UberCasino::Player::_name_slice *to, const UberCasino::Player::_name_slice* from);
 template <>
 void DDS_DCPS_ArrayHelper < UberCasino::Player::_name, UberCasino::Player::_name_slice, UberCasino::Player::_name_uniq_>::free (UberCasino::Player::_name_slice *ptr);
+template <>
+UberCasino::Player::_game_uid_slice* DDS_DCPS_ArrayHelper < UberCasino::Player::_game_uid, UberCasino::Player::_game_uid_slice, UberCasino::Player::_game_uid_uniq_>::alloc ();
+template <>
+void DDS_DCPS_ArrayHelper < UberCasino::Player::_game_uid, UberCasino::Player::_game_uid_slice, UberCasino::Player::_game_uid_uniq_>::copy (UberCasino::Player::_game_uid_slice *to, const UberCasino::Player::_game_uid_slice* from);
+template <>
+void DDS_DCPS_ArrayHelper < UberCasino::Player::_game_uid, UberCasino::Player::_game_uid_slice, UberCasino::Player::_game_uid_uniq_>::free (UberCasino::Player::_game_uid_slice *ptr);
+template <>
+UberCasino::Player::_dealer_uid_slice* DDS_DCPS_ArrayHelper < UberCasino::Player::_dealer_uid, UberCasino::Player::_dealer_uid_slice, UberCasino::Player::_dealer_uid_uniq_>::alloc ();
+template <>
+void DDS_DCPS_ArrayHelper < UberCasino::Player::_dealer_uid, UberCasino::Player::_dealer_uid_slice, UberCasino::Player::_dealer_uid_uniq_>::copy (UberCasino::Player::_dealer_uid_slice *to, const UberCasino::Player::_dealer_uid_slice* from);
+template <>
+void DDS_DCPS_ArrayHelper < UberCasino::Player::_dealer_uid, UberCasino::Player::_dealer_uid_slice, UberCasino::Player::_dealer_uid_uniq_>::free (UberCasino::Player::_dealer_uid_slice *ptr);
 template <>
 UberCasino::Dealer::_uuid_slice* DDS_DCPS_ArrayHelper < UberCasino::Dealer::_uuid, UberCasino::Dealer::_uuid_slice, UberCasino::Dealer::_uuid_uniq_>::alloc ();
 template <>

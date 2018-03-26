@@ -745,6 +745,744 @@ UberCasino::PlayerDataReaderView_impl::lookup_instance(
 
 
 extern c_bool
+__UberCasino_Dealer__copyIn(
+    c_base base,
+    struct UberCasino::Dealer *from,
+    struct _UberCasino_Dealer *to);
+
+extern void
+__UberCasino_Dealer__copyOut(
+    void *_from,
+    void *_to);
+
+// DDS UberCasino::Dealer TypeSupportFactory Object Body
+
+::DDS::DataWriter_ptr
+UberCasino::DealerTypeSupportFactory::create_datawriter (gapi_dataWriter handle)
+{
+    return new UberCasino::DealerDataWriter_impl(handle);
+}
+
+::DDS::DataReader_ptr
+UberCasino::DealerTypeSupportFactory::create_datareader (gapi_dataReader handle)
+{
+    return new UberCasino::DealerDataReader_impl (handle);
+}
+
+
+::DDS::DataReaderView_ptr
+UberCasino::DealerTypeSupportFactory::create_view (gapi_dataReaderView handle)
+{
+    return new UberCasino::DealerDataReaderView_impl (handle);
+}
+
+// DDS UberCasino::Dealer TypeSupport Object Body
+
+UberCasino::DealerTypeSupport::DealerTypeSupport(void) :
+    TypeSupport_impl(
+        __UberCasino_Dealer__name(),
+        __UberCasino_Dealer__keys(),
+        UberCasino::DealerTypeSupport::metaDescriptor,
+        (gapi_copyIn) __UberCasino_Dealer__copyIn,
+        (gapi_copyOut) __UberCasino_Dealer__copyOut,
+        (gapi_readerCopy) ::DDS::ccpp_DataReaderCopy<UberCasino::DealerSeq, UberCasino::Dealer>,
+        new  UberCasino::DealerTypeSupportFactory(),
+        UberCasino::DealerTypeSupport::metaDescriptorArrLength)
+{
+    // Parent constructor takes care of everything.
+}
+
+UberCasino::DealerTypeSupport::~DealerTypeSupport(void)
+{
+    // Parent destructor takes care of everything.
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerTypeSupport::register_type(
+    ::DDS::DomainParticipant_ptr domain,
+    const char * type_name) THROW_ORB_EXCEPTIONS
+{
+    return TypeSupport_impl::register_type(domain, type_name);
+}
+
+char *
+UberCasino::DealerTypeSupport::get_type_name() THROW_ORB_EXCEPTIONS
+{
+    return TypeSupport_impl::get_type_name();
+}
+
+// DDS UberCasino::Dealer DataWriter_impl Object Body
+
+UberCasino::DealerDataWriter_impl::DealerDataWriter_impl (
+    gapi_dataWriter handle
+) : ::DDS::DataWriter_impl(handle)
+{
+    // Parent constructor takes care of everything.
+}
+
+UberCasino::DealerDataWriter_impl::~DealerDataWriter_impl(void)
+{
+    // Parent destructor takes care of everything.
+}
+
+::DDS::InstanceHandle_t
+UberCasino::DealerDataWriter_impl::register_instance(
+    const UberCasino::Dealer & instance_data) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::register_instance(&instance_data);
+}
+
+::DDS::InstanceHandle_t
+UberCasino::DealerDataWriter_impl::register_instance_w_timestamp(
+    const Dealer & instance_data,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::register_instance_w_timestamp(&instance_data, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataWriter_impl::unregister_instance(
+    const UberCasino::Dealer & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::unregister_instance(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataWriter_impl::unregister_instance_w_timestamp(
+    const Dealer & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::unregister_instance_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataWriter_impl::write(
+    const UberCasino::Dealer & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::write(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataWriter_impl::write_w_timestamp(
+    const Dealer & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::write_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataWriter_impl::dispose(
+    const UberCasino::Dealer & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::dispose(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataWriter_impl::dispose_w_timestamp(
+    const Dealer & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::dispose_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataWriter_impl::writedispose(
+    const UberCasino::Dealer & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::writedispose(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataWriter_impl::writedispose_w_timestamp(
+    const Dealer & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::writedispose_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataWriter_impl::get_key_value(
+    Dealer & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+UberCasino::DealerDataWriter_impl::lookup_instance(
+    const UberCasino::Dealer & instance_data) THROW_ORB_EXCEPTIONS
+{
+    return DataWriter_impl::lookup_instance(&instance_data);
+}
+
+// DDS UberCasino::Dealer DataReader_impl Object Body
+
+UberCasino::DealerDataReader_impl::DealerDataReader_impl (
+    gapi_dataReader handle
+) : ::DDS::DataReader_impl(handle, ::DDS::ccpp_DataReaderParallelDemarshallingMain<UberCasino::DealerSeq>)
+{
+    // Parent constructor takes care of everything.
+}
+
+UberCasino::DealerDataReader_impl::~DealerDataReader_impl(void)
+{
+    // Parent destructor takes care of everything.
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::read(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReader_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::take(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReader_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::read_w_condition(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReader_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::take_w_condition(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReader_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::read_next_sample(
+    UberCasino::Dealer & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DataReader_impl::read_next_sample(&received_data, sample_info);
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::take_next_sample(
+    UberCasino::Dealer & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DataReader_impl::take_next_sample(&received_data, sample_info);
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::read_instance(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReader_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::take_instance(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReader_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::read_next_instance(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReader_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::take_next_instance(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReader_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::read_next_instance_w_condition(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReader_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::take_next_instance_w_condition(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReader_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::return_loan(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = ::DDS::RETCODE_OK;
+
+    if ( received_data.length() > 0 ) {
+        if (received_data.length() == info_seq.length() &&
+            received_data.release() == info_seq.release() ) {
+            if (!received_data.release()) {
+                status = DataReader_impl::return_loan( received_data.get_buffer(),
+                                                       info_seq.get_buffer() );
+
+                if ( status == ::DDS::RETCODE_OK ) {
+                    if ( !received_data.release() ) {
+                        UberCasino::DealerSeq::freebuf( received_data.get_buffer(false) );
+                        received_data.replace(0, 0, NULL, false);
+                        ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
+                        info_seq.replace(0, 0, NULL, false);
+                    }
+                } else if ( status == ::DDS::RETCODE_NO_DATA ) {
+                    if ( received_data.release() ) {
+                        status = ::DDS::RETCODE_OK;
+                    } else {
+                        status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+                    }
+                }
+            }
+        } else {
+            status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+        }
+    }
+    return status;
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::get_key_value(
+    UberCasino::Dealer & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DataReader_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+UberCasino::DealerDataReader_impl::lookup_instance(
+    const UberCasino::Dealer & instance) THROW_ORB_EXCEPTIONS
+{
+    return DataReader_impl::lookup_instance(&instance);
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReader_impl::check_preconditions(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples)
+{
+    ::DDS::ReturnCode_t status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+
+    if ( received_data.length() == info_seq.length() &&
+         received_data.maximum() == info_seq.maximum() &&
+         received_data.release() == info_seq.release() ) {
+        if ( received_data.maximum() == 0 || received_data.release() ) {
+            if (received_data.maximum() == 0 ||
+                max_samples <= static_cast<DDS::Long>(received_data.maximum()) ||
+                max_samples == ::DDS::LENGTH_UNLIMITED ) {
+                status = ::DDS::RETCODE_OK;
+            }
+        }
+    }
+    return status;
+}
+
+
+// DDS UberCasino::Dealer DataReaderView_impl Object Body
+
+UberCasino::DealerDataReaderView_impl::DealerDataReaderView_impl (
+    gapi_dataReaderView handle
+) : ::DDS::DataReaderView_impl(handle)
+{
+    // Parent constructor takes care of everything.
+}
+
+UberCasino::DealerDataReaderView_impl::~DealerDataReaderView_impl(void)
+{
+    // Parent destructor takes care of everything.
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::read(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = UberCasino::DealerDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReaderView_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::take(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = UberCasino::DealerDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReaderView_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::read_w_condition(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = UberCasino::DealerDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReaderView_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::take_w_condition(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = UberCasino::DealerDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReaderView_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::read_next_sample(
+    UberCasino::Dealer & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DataReaderView_impl::read_next_sample(&received_data, sample_info);
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::take_next_sample(
+    UberCasino::Dealer & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DataReaderView_impl::take_next_sample(&received_data, sample_info);
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::read_instance(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = UberCasino::DealerDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReaderView_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::take_instance(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = UberCasino::DealerDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReaderView_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::read_next_instance(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = UberCasino::DealerDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReaderView_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::take_next_instance(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = UberCasino::DealerDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReaderView_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::read_next_instance_w_condition(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = UberCasino::DealerDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReaderView_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::take_next_instance_w_condition(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = UberCasino::DealerDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DataReaderView_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::return_loan(
+    UberCasino::DealerSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = ::DDS::RETCODE_OK;
+
+    if ( received_data.length() > 0 ) {
+        if (received_data.length() == info_seq.length() &&
+            received_data.release() == info_seq.release() ) {
+            if (!received_data.release()) {
+                status = DataReaderView_impl::return_loan( received_data.get_buffer(),
+                                                       info_seq.get_buffer() );
+
+                if ( status == ::DDS::RETCODE_OK ) {
+                    if ( !received_data.release() ) {
+                        UberCasino::DealerSeq::freebuf( received_data.get_buffer(false) );
+                        received_data.replace(0, 0, NULL, false);
+                        ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
+                        info_seq.replace(0, 0, NULL, false);
+                    }
+                } else if ( status == ::DDS::RETCODE_NO_DATA ) {
+                    if ( received_data.release() ) {
+                        status = ::DDS::RETCODE_OK;
+                    } else {
+                        status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+                    }
+                }
+            }
+        } else {
+            status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+        }
+    }
+    return status;
+}
+
+
+::DDS::ReturnCode_t
+UberCasino::DealerDataReaderView_impl::get_key_value(
+    UberCasino::Dealer & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DataReaderView_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+UberCasino::DealerDataReaderView_impl::lookup_instance(
+    const UberCasino::Dealer & instance) THROW_ORB_EXCEPTIONS
+{
+    return DataReaderView_impl::lookup_instance(&instance);
+}
+
+
+
+extern c_bool
 __UberCasino_Game__copyIn(
     c_base base,
     struct UberCasino::Game *from,
@@ -1485,9 +2223,15 @@ UberCasino::GameDataReaderView_impl::lookup_instance(
 const char * ::UberCasino::PlayerTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"UberCasino\"><Enum name=\"player_action_t\"><Element name=\"idle\" value=\"0\"/>",
 "<Element name=\"hitting\" value=\"1\"/><Element name=\"standing\" value=\"2\"/><Element name=\"splitting\" value=\"3\"/>",
 "<Element name=\"doubling\" value=\"4\"/></Enum><Struct name=\"Player\"><Member name=\"uuid\"><Array size=\"8\">",
-"<Char/></Array></Member><Member name=\"name\"><Array size=\"32\"><Char/></Array></Member><Member name=\"balance\">",
-"<Float/></Member><Member name=\"A\"><Type name=\"player_action_t\"/></Member></Struct></Module></MetaData>"};
-const ::DDS::ULong (::UberCasino::PlayerTypeSupport::metaDescriptorArrLength) = 5;
+"<Char/></Array></Member><Member name=\"name\"><Array size=\"32\"><Char/></Array></Member><Member name=\"game_uid\">",
+"<Array size=\"8\"><Char/></Array></Member><Member name=\"dealer_uid\"><Array size=\"8\"><Char/></Array>",
+"</Member><Member name=\"balance\"><Float/></Member><Member name=\"A\"><Type name=\"player_action_t\"/>",
+"</Member></Struct></Module></MetaData>"};
+const ::DDS::ULong (::UberCasino::PlayerTypeSupport::metaDescriptorArrLength) = 7;
+const char * ::UberCasino::DealerTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"UberCasino\"><Struct name=\"Dealer\"><Member name=\"uuid\">",
+"<Array size=\"8\"><Char/></Array></Member><Member name=\"name\"><Array size=\"32\"><Char/></Array></Member>",
+"<Member name=\"game_uuid\"><Array size=\"8\"><Char/></Array></Member></Struct></Module></MetaData>"};
+const ::DDS::ULong (::UberCasino::DealerTypeSupport::metaDescriptorArrLength) = 3;
 const char * ::UberCasino::GameTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"UberCasino\"><Enum name=\"game_state\"><Element name=\"waiting_to_join\" value=\"0\"/>",
 "<Element name=\"waiting\" value=\"1\"/><Element name=\"playing\" value=\"2\"/></Enum><Enum name=\"card_kind\">",
 "<Element name=\"ace\" value=\"0\"/><Element name=\"two\" value=\"1\"/><Element name=\"three\" value=\"2\"/>",

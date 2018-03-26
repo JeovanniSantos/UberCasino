@@ -4,7 +4,7 @@
 //  
 //  File name: UberCasinoDcps.cpp
 //  Source: UberCasinoDcps.idl
-//  Generated: Fri Mar 23 00:59:51 2018
+//  Generated: Sun Mar 25 23:09:36 2018
 //  OpenSplice V6.4.140320OSS
 //  
 //******************************************************************
@@ -13,6 +13,9 @@
 
 #if DDS_USE_EXPLICIT_TEMPLATES
 template class DDS_DCPSUFLSeq < UberCasino::Game, struct GameSeq_uniq_>;
+#endif
+#if DDS_USE_EXPLICIT_TEMPLATES
+template class DDS_DCPSUFLSeq < UberCasino::Dealer, struct DealerSeq_uniq_>;
 #endif
 #if DDS_USE_EXPLICIT_TEMPLATES
 template class DDS_DCPSUFLSeq < UberCasino::Player, struct PlayerSeq_uniq_>;
@@ -190,6 +193,182 @@ UberCasino::PlayerDataReaderView_ptr UberCasino::PlayerDataReaderView::_unchecke
 {
    UberCasino::PlayerDataReaderView_ptr result;
    result = dynamic_cast < UberCasino::PlayerDataReaderView_ptr> (p);
+   if (result) result->m_count++;
+   return result;
+}
+
+const char * UberCasino::DealerTypeSupportInterface::_local_id = "IDL:UberCasino/DealerTypeSupportInterface:1.0";
+
+UberCasino::DealerTypeSupportInterface_ptr UberCasino::DealerTypeSupportInterface::_duplicate (UberCasino::DealerTypeSupportInterface_ptr p)
+{
+   if (p) p->m_count++;
+   return p;
+}
+
+DDS::Boolean UberCasino::DealerTypeSupportInterface::_local_is_a (const char * _id)
+{
+   if (strcmp (_id, UberCasino::DealerTypeSupportInterface::_local_id) == 0)
+   {
+      return true;
+   }
+
+   typedef DDS::TypeSupport NestedBase_1;
+
+   if (NestedBase_1::_local_is_a (_id))
+   {
+      return true;
+   }
+
+   return false;
+}
+
+UberCasino::DealerTypeSupportInterface_ptr UberCasino::DealerTypeSupportInterface::_narrow (DDS::Object_ptr p)
+{
+   UberCasino::DealerTypeSupportInterface_ptr result = NULL;
+   if (p && p->_is_a (UberCasino::DealerTypeSupportInterface::_local_id))
+   {
+      result = dynamic_cast < UberCasino::DealerTypeSupportInterface_ptr> (p);
+      if (result) result->m_count++;
+   }
+   return result;
+}
+
+UberCasino::DealerTypeSupportInterface_ptr UberCasino::DealerTypeSupportInterface::_unchecked_narrow (DDS::Object_ptr p)
+{
+   UberCasino::DealerTypeSupportInterface_ptr result;
+   result = dynamic_cast < UberCasino::DealerTypeSupportInterface_ptr> (p);
+   if (result) result->m_count++;
+   return result;
+}
+
+const char * UberCasino::DealerDataWriter::_local_id = "IDL:UberCasino/DealerDataWriter:1.0";
+
+UberCasino::DealerDataWriter_ptr UberCasino::DealerDataWriter::_duplicate (UberCasino::DealerDataWriter_ptr p)
+{
+   if (p) p->m_count++;
+   return p;
+}
+
+DDS::Boolean UberCasino::DealerDataWriter::_local_is_a (const char * _id)
+{
+   if (strcmp (_id, UberCasino::DealerDataWriter::_local_id) == 0)
+   {
+      return true;
+   }
+
+   typedef DDS::DataWriter NestedBase_1;
+
+   if (NestedBase_1::_local_is_a (_id))
+   {
+      return true;
+   }
+
+   return false;
+}
+
+UberCasino::DealerDataWriter_ptr UberCasino::DealerDataWriter::_narrow (DDS::Object_ptr p)
+{
+   UberCasino::DealerDataWriter_ptr result = NULL;
+   if (p && p->_is_a (UberCasino::DealerDataWriter::_local_id))
+   {
+      result = dynamic_cast < UberCasino::DealerDataWriter_ptr> (p);
+      if (result) result->m_count++;
+   }
+   return result;
+}
+
+UberCasino::DealerDataWriter_ptr UberCasino::DealerDataWriter::_unchecked_narrow (DDS::Object_ptr p)
+{
+   UberCasino::DealerDataWriter_ptr result;
+   result = dynamic_cast < UberCasino::DealerDataWriter_ptr> (p);
+   if (result) result->m_count++;
+   return result;
+}
+
+const char * UberCasino::DealerDataReader::_local_id = "IDL:UberCasino/DealerDataReader:1.0";
+
+UberCasino::DealerDataReader_ptr UberCasino::DealerDataReader::_duplicate (UberCasino::DealerDataReader_ptr p)
+{
+   if (p) p->m_count++;
+   return p;
+}
+
+DDS::Boolean UberCasino::DealerDataReader::_local_is_a (const char * _id)
+{
+   if (strcmp (_id, UberCasino::DealerDataReader::_local_id) == 0)
+   {
+      return true;
+   }
+
+   typedef DDS::DataReader NestedBase_1;
+
+   if (NestedBase_1::_local_is_a (_id))
+   {
+      return true;
+   }
+
+   return false;
+}
+
+UberCasino::DealerDataReader_ptr UberCasino::DealerDataReader::_narrow (DDS::Object_ptr p)
+{
+   UberCasino::DealerDataReader_ptr result = NULL;
+   if (p && p->_is_a (UberCasino::DealerDataReader::_local_id))
+   {
+      result = dynamic_cast < UberCasino::DealerDataReader_ptr> (p);
+      if (result) result->m_count++;
+   }
+   return result;
+}
+
+UberCasino::DealerDataReader_ptr UberCasino::DealerDataReader::_unchecked_narrow (DDS::Object_ptr p)
+{
+   UberCasino::DealerDataReader_ptr result;
+   result = dynamic_cast < UberCasino::DealerDataReader_ptr> (p);
+   if (result) result->m_count++;
+   return result;
+}
+
+const char * UberCasino::DealerDataReaderView::_local_id = "IDL:UberCasino/DealerDataReaderView:1.0";
+
+UberCasino::DealerDataReaderView_ptr UberCasino::DealerDataReaderView::_duplicate (UberCasino::DealerDataReaderView_ptr p)
+{
+   if (p) p->m_count++;
+   return p;
+}
+
+DDS::Boolean UberCasino::DealerDataReaderView::_local_is_a (const char * _id)
+{
+   if (strcmp (_id, UberCasino::DealerDataReaderView::_local_id) == 0)
+   {
+      return true;
+   }
+
+   typedef DDS::DataReaderView NestedBase_1;
+
+   if (NestedBase_1::_local_is_a (_id))
+   {
+      return true;
+   }
+
+   return false;
+}
+
+UberCasino::DealerDataReaderView_ptr UberCasino::DealerDataReaderView::_narrow (DDS::Object_ptr p)
+{
+   UberCasino::DealerDataReaderView_ptr result = NULL;
+   if (p && p->_is_a (UberCasino::DealerDataReaderView::_local_id))
+   {
+      result = dynamic_cast < UberCasino::DealerDataReaderView_ptr> (p);
+      if (result) result->m_count++;
+   }
+   return result;
+}
+
+UberCasino::DealerDataReaderView_ptr UberCasino::DealerDataReaderView::_unchecked_narrow (DDS::Object_ptr p)
+{
+   UberCasino::DealerDataReaderView_ptr result;
+   result = dynamic_cast < UberCasino::DealerDataReaderView_ptr> (p);
    if (result) result->m_count++;
    return result;
 }

@@ -35,13 +35,55 @@ public:
   Player GetPlayer(){
     return p;
   }
+  
+  /*** Function to Set The player's Game ID ***/
+  void SetPlayerGame(char * game, char * dealer){
+    strcpy(p.game_uid, game);
+    strcpy(p.dealer_uid, dealer);
+  }
+
+  /*** Function to retrieve a player's card type ***/
+  string GetPlayerCard(card_kind c){
+    char r[10];
+    switch( c )
+    {
+      case card_kind::ace: strcpy(r, "ace"); break;
+      case card_kind::two: strcpy(r, "two"); break;
+      case card_kind::three: strcpy(r, "three"); break;
+      case card_kind::four: strcpy(r, "four"); break;
+      case card_kind::five: strcpy(r, "five"); break;
+      case card_kind::six: strcpy(r, "six"); break;
+      case card_kind::seven: strcpy(r, "seven"); break;
+      case card_kind::eight: strcpy(r, "eight"); break;
+      case card_kind::nine: strcpy(r, "nine"); break;
+      case card_kind::ten: strcpy(r, "ten"); break;
+      case card_kind::jack: strcpy(r, "jack"); break;
+      case card_kind::queen: strcpy(r, "queen"); break;
+      case card_kind::king: strcpy(r, "king"); break;
+    }
+    return string(r);
+  }  
+
+  /*** Function to retrieve a player's card suite type ***/
+  string GetPlayerCardSuite(suite_t t){
+    char r[10];
+
+    switch( t )
+    {
+      case suite_t::hearts: strcpy(r, "hearts"); break;
+      case suite_t::diamonds: strcpy(r, "diamonds"); break;
+      case suite_t::clubs: strcpy(r, "clubs"); break;
+      case suite_t::spades: strcpy(r, "spades"); break;
+    }
+    return string(r);
+  } 
 
 };//end of class declaration
 
 /*
   function to to act as publisher and write data passed in as parameter
   */
-  static void Publish()
+  static void Publish(PlayerUC **p)
   {
     DDSEntityManager mgr;
 
@@ -69,18 +111,16 @@ public:
 
     //Publish Events
     DataWriter_var dw = mgr.getWriter();  
-    PlayerDataWriter_var PlayerWriter = PlayerDataWriter::_narrow(dw.in());
-
-    checkHandle(PlayerWriter.in(), "PlayerDataWriter::_narrow");
-
+    PlayerDataWriter_var PlayerWriter =     PlayerDataWriter::_narrow(dw.in());
     Player PlayerInstance;
-    strcpy(PlayerInstance.uuid, "1" );
-    strcpy(PlayerInstance.name, "Player" );
-
+    checkHandle(PlayerWriter.in(), "PlayerDataWriter::_narrow");
+    
+    PlayerInstance = (*p)->GetPlayer();
     cout << "=== [Player Publisher] writing a message containing :" << endl;
     cout << "    Player ID   : " << PlayerInstance.uuid << endl;
-    cout << "    Player name : " << PlayerInstance.name << endl;
-
+    cout << "    Game ID : " << PlayerInstance.game_uid << endl;
+    cout << "    Dealer ID : " << PlayerInstance.dealer_uid << endl;
+   
     ReturnCode_t status = PlayerWriter->write(PlayerInstance,          DDS::HANDLE_NIL);
   checkStatus(status, "PlayerDataWriter::write");
   os_nanoSleep(delay_1s);
@@ -103,7 +143,7 @@ public:
   /*
   function to to act as subscriber and read data passed in as parameter
   */
-  static void Subscribe(char* action, PlayerUC p)
+  static void Subscribe(PlayerUC **p)
   {
     DDSEntityManager mgr;
     GameSeq gs;
@@ -116,18 +156,12 @@ public:
     //Create Participant
     mgr.createParticipant("UberCasino");
 
-    //Create Type based on action 
-    if(strcmp("Game", action) == 0){
-      GameTypeSupportInterface_var pts = new GameTypeSupport();
-      mgr.registerType(pts.in());
-    }
-    else if(strcmp("Player", action) == 0){
-      PlayerTypeSupportInterface_var pts = new PlayerTypeSupport();
-      mgr.registerType(pts.in());
-    }
+    //Create Type
+    GameTypeSupportInterface_var pts = new GameTypeSupport();
+    mgr.registerType(pts.in());
 
     //Create Topic
-    char *topic_name = action;
+    char topic_name[] = "Game";
     mgr.createTopic(topic_name);
 
     //Create Subscriber
@@ -144,57 +178,40 @@ public:
     bool found = false;
     ReturnCode_t status = -1;
 
-    if(strcmp("Game", action) == 0){
-      GameReader = GameDataReader::_narrow(dr.in());
-      checkHandle(GameReader.in(), "GameDataReader::_narrow");
+    GameReader = GameDataReader::_narrow(dr.in());
+    checkHandle(GameReader.in(), "GameDataReader::_narrow");
 
-      //We don't want to read indefinitly so we will search until something is found
-      while(!found)
-      {
-        status = GameReader->take(gs, infoSeq, LENGTH_UNLIMITED,
+    //We don't want to read indefinitly so we will search until something is found
+    while(!found)
+    {
+      status = GameReader->take(gs, infoSeq, LENGTH_UNLIMITED,
         ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
       
-        checkStatus(status, "GameDataReader::take");
-        DDS::ULong i;
-        for(i = 0; i < gs.length(); i++)
-        {
-	  cout << "=== [Player Subscriber] message received :" << endl;
+      checkStatus(status, "GameDataReader::take");
+      DDS::ULong i;
+      for(i = 0; i < gs.length(); i++)
+      {
+	if(gs[i].gstate == waiting_to_join){
+          cout << "=== [Player Subscriber] message received :" << endl;
           cout << "    Game ID   : " << gs[i].game_uid << endl;
           cout << "    Dealer ID : " << gs[i].dealer_uid << endl;
-	  found = true;
+          (*p)->SetPlayerGame(gs[i].game_uid, gs[i].dealer_uid);
         }
-
-        status = GameReader->return_loan(gs, infoSeq);
-        checkStatus(status, "GameDataReader::return_loan");
-        os_nanoSleep(delay_200ms);
-      }
-    } 
-    else if(strcmp("Player", action) == 0){
-      PlayerReader = PlayerDataReader::_narrow(dr.in());
-      checkHandle(PlayerReader.in(), "PlaerDataReader::_narrow");
-
-      //We don't want to read indefinitly so we will search until something is found
-      while(!found)
-      {
-        status = PlayerReader->take(ps, infoSeq, LENGTH_UNLIMITED,
-        ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
-      
-        checkStatus(status, "PlayerDataReader::take");
-        DDS::ULong i;
-        for(i = 0; i < ps.length(); i++)
-        {
-	  cout << "=== [Player Subscriber] message received :" << endl;
-          cout << "    Player ID   : " << ps[i].uuid << endl;
-          cout << "    Player name : " << ps[i].name << endl;
-	  found = true;
+        else if(gs[i].gstate == playing){
+          string card = (*p)->GetPlayerCard(gs[i].p[0].cards[0].card);
+          string suite = (*p)->GetPlayerCardSuite(gs[i].p[0].cards[0].suite);
+          cout << "=== [Player Subscriber] message received :" << endl;
+          cout << "    Game ID   : " << gs[i].game_uid << endl;
+          cout << "    Dealer ID : " << gs[i].dealer_uid << endl;
+          cout << "    Dealer dealt a " << card << " of " << suite << endl;  
         }
-
-        status = PlayerReader->return_loan(ps, infoSeq);
-        checkStatus(status, "PlayerDataReader::return_loan");
-        os_nanoSleep(delay_200ms);
+	found = true;
       }
-   }
-   
+
+      status = GameReader->return_loan(gs, infoSeq);
+      checkStatus(status, "GameDataReader::return_loan");
+      os_nanoSleep(delay_200ms);
+    }
 
     os_nanoSleep(delay_2ms);
 
@@ -227,18 +244,23 @@ int main (int argc, char **argv)
   PlayerUC *p = new PlayerUC();
   p->SetPlayer();
   
-  char game[] = "Game";
-  char player[] = "Player";
   os_time delay_5s = { 5, 0 };
-  while(1){
-    Subscribe(game, *p);
-    //wait 5 secs
-    os_nanoSleep(delay_5s);
-    Publish();
-  }
-  //start the game
+
+  //Search for game
+  Subscribe(&p);
+  //wait 5 secs
+  os_nanoSleep(delay_5s);
+
+  //Send information to the Dealer hosting the Game
+  Publish(&p);
+  os_nanoSleep(delay_5s);
   
-  //while game is on publish and subscribe data
+  //start the game && search for cards dealt by dealer
+  
+  for(int i = 0; i < 10; i++){
+    Subscribe(&p);
+    os_nanoSleep(delay_5s);
+  }
 
   //if game is finsihed ask to start new game or quit
  

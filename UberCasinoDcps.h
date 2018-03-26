@@ -4,7 +4,7 @@
 //  
 //  File name: UberCasinoDcps.h
 //  Source: UberCasinoDcps.idl
-//  Generated: Fri Mar 23 00:59:51 2018
+//  Generated: Sun Mar 25 23:09:36 2018
 //  OpenSplice V6.4.140320OSS
 //  
 //******************************************************************
@@ -46,6 +46,34 @@ namespace UberCasino
    typedef PlayerDataReaderView * PlayerDataReaderView_ptr;
    typedef DDS_DCPSInterface_var < PlayerDataReaderView> PlayerDataReaderView_var;
    typedef DDS_DCPSInterface_out < PlayerDataReaderView> PlayerDataReaderView_out;
+
+
+   class DealerTypeSupportInterface;
+
+   typedef DealerTypeSupportInterface * DealerTypeSupportInterface_ptr;
+   typedef DDS_DCPSInterface_var < DealerTypeSupportInterface> DealerTypeSupportInterface_var;
+   typedef DDS_DCPSInterface_out < DealerTypeSupportInterface> DealerTypeSupportInterface_out;
+
+
+   class DealerDataWriter;
+
+   typedef DealerDataWriter * DealerDataWriter_ptr;
+   typedef DDS_DCPSInterface_var < DealerDataWriter> DealerDataWriter_var;
+   typedef DDS_DCPSInterface_out < DealerDataWriter> DealerDataWriter_out;
+
+
+   class DealerDataReader;
+
+   typedef DealerDataReader * DealerDataReader_ptr;
+   typedef DDS_DCPSInterface_var < DealerDataReader> DealerDataReader_var;
+   typedef DDS_DCPSInterface_out < DealerDataReader> DealerDataReader_out;
+
+
+   class DealerDataReaderView;
+
+   typedef DealerDataReaderView * DealerDataReaderView_ptr;
+   typedef DDS_DCPSInterface_var < DealerDataReaderView> DealerDataReaderView_var;
+   typedef DDS_DCPSInterface_out < DealerDataReaderView> DealerDataReaderView_out;
 
 
    class GameTypeSupportInterface;
@@ -223,6 +251,156 @@ namespace UberCasino
    private:
       PlayerDataReaderView (const PlayerDataReaderView &);
       PlayerDataReaderView & operator = (const PlayerDataReaderView &);
+   };
+
+   struct DealerSeq_uniq_ {};
+   typedef DDS_DCPSUFLSeq < Dealer, struct DealerSeq_uniq_> DealerSeq;
+   typedef DDS_DCPSSequence_var < DealerSeq> DealerSeq_var;
+   typedef DDS_DCPSSequence_out < DealerSeq> DealerSeq_out;
+   class DealerTypeSupportInterface
+   :
+      virtual public DDS::TypeSupport
+   { 
+   public:
+      typedef DealerTypeSupportInterface_ptr _ptr_type;
+      typedef DealerTypeSupportInterface_var _var_type;
+
+      static DealerTypeSupportInterface_ptr _duplicate (DealerTypeSupportInterface_ptr obj);
+      DDS::Boolean _local_is_a (const char * id);
+
+      static DealerTypeSupportInterface_ptr _narrow (DDS::Object_ptr obj);
+      static DealerTypeSupportInterface_ptr _unchecked_narrow (DDS::Object_ptr obj);
+      static DealerTypeSupportInterface_ptr _nil () { return 0; }
+      static const char * _local_id;
+      DealerTypeSupportInterface_ptr _this () { return this; }
+
+
+   protected:
+      DealerTypeSupportInterface () {};
+      ~DealerTypeSupportInterface () {};
+   private:
+      DealerTypeSupportInterface (const DealerTypeSupportInterface &);
+      DealerTypeSupportInterface & operator = (const DealerTypeSupportInterface &);
+   };
+
+   class DealerDataWriter
+   :
+      virtual public DDS::DataWriter
+   { 
+   public:
+      typedef DealerDataWriter_ptr _ptr_type;
+      typedef DealerDataWriter_var _var_type;
+
+      static DealerDataWriter_ptr _duplicate (DealerDataWriter_ptr obj);
+      DDS::Boolean _local_is_a (const char * id);
+
+      static DealerDataWriter_ptr _narrow (DDS::Object_ptr obj);
+      static DealerDataWriter_ptr _unchecked_narrow (DDS::Object_ptr obj);
+      static DealerDataWriter_ptr _nil () { return 0; }
+      static const char * _local_id;
+      DealerDataWriter_ptr _this () { return this; }
+
+      virtual DDS::LongLong register_instance (const Dealer& instance_data) = 0;
+      virtual DDS::LongLong register_instance_w_timestamp (const Dealer& instance_data, const DDS::Time_t& source_timestamp) = 0;
+      virtual DDS::Long unregister_instance (const Dealer& instance_data, DDS::LongLong handle) = 0;
+      virtual DDS::Long unregister_instance_w_timestamp (const Dealer& instance_data, DDS::LongLong handle, const DDS::Time_t& source_timestamp) = 0;
+      virtual DDS::Long write (const Dealer& instance_data, DDS::LongLong handle) = 0;
+      virtual DDS::Long write_w_timestamp (const Dealer& instance_data, DDS::LongLong handle, const DDS::Time_t& source_timestamp) = 0;
+      virtual DDS::Long dispose (const Dealer& instance_data, DDS::LongLong handle) = 0;
+      virtual DDS::Long dispose_w_timestamp (const Dealer& instance_data, DDS::LongLong handle, const DDS::Time_t& source_timestamp) = 0;
+      virtual DDS::Long writedispose (const Dealer& instance_data, DDS::LongLong handle) = 0;
+      virtual DDS::Long writedispose_w_timestamp (const Dealer& instance_data, DDS::LongLong handle, const DDS::Time_t& source_timestamp) = 0;
+      virtual DDS::Long get_key_value (Dealer& key_holder, DDS::LongLong handle) = 0;
+      virtual DDS::LongLong lookup_instance (const Dealer& instance_data) = 0;
+
+   protected:
+      DealerDataWriter () {};
+      ~DealerDataWriter () {};
+   private:
+      DealerDataWriter (const DealerDataWriter &);
+      DealerDataWriter & operator = (const DealerDataWriter &);
+   };
+
+   class DealerDataReader
+   :
+      virtual public DDS::DataReader
+   { 
+   public:
+      typedef DealerDataReader_ptr _ptr_type;
+      typedef DealerDataReader_var _var_type;
+
+      static DealerDataReader_ptr _duplicate (DealerDataReader_ptr obj);
+      DDS::Boolean _local_is_a (const char * id);
+
+      static DealerDataReader_ptr _narrow (DDS::Object_ptr obj);
+      static DealerDataReader_ptr _unchecked_narrow (DDS::Object_ptr obj);
+      static DealerDataReader_ptr _nil () { return 0; }
+      static const char * _local_id;
+      DealerDataReader_ptr _this () { return this; }
+
+      virtual DDS::Long read (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_w_condition (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long take_w_condition (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long read_next_sample (Dealer& received_data, DDS::SampleInfo& sample_info) = 0;
+      virtual DDS::Long take_next_sample (Dealer& received_data, DDS::SampleInfo& sample_info) = 0;
+      virtual DDS::Long read_instance (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take_instance (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_next_instance (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take_next_instance (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_next_instance_w_condition (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long take_next_instance_w_condition (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long return_loan (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq) = 0;
+      virtual DDS::Long get_key_value (Dealer& key_holder, DDS::LongLong handle) = 0;
+      virtual DDS::LongLong lookup_instance (const Dealer& instance) = 0;
+
+   protected:
+      DealerDataReader () {};
+      ~DealerDataReader () {};
+   private:
+      DealerDataReader (const DealerDataReader &);
+      DealerDataReader & operator = (const DealerDataReader &);
+   };
+
+   class DealerDataReaderView
+   :
+      virtual public DDS::DataReaderView
+   { 
+   public:
+      typedef DealerDataReaderView_ptr _ptr_type;
+      typedef DealerDataReaderView_var _var_type;
+
+      static DealerDataReaderView_ptr _duplicate (DealerDataReaderView_ptr obj);
+      DDS::Boolean _local_is_a (const char * id);
+
+      static DealerDataReaderView_ptr _narrow (DDS::Object_ptr obj);
+      static DealerDataReaderView_ptr _unchecked_narrow (DDS::Object_ptr obj);
+      static DealerDataReaderView_ptr _nil () { return 0; }
+      static const char * _local_id;
+      DealerDataReaderView_ptr _this () { return this; }
+
+      virtual DDS::Long read (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_w_condition (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long take_w_condition (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long read_next_sample (Dealer& received_data, DDS::SampleInfo& sample_info) = 0;
+      virtual DDS::Long take_next_sample (Dealer& received_data, DDS::SampleInfo& sample_info) = 0;
+      virtual DDS::Long read_instance (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take_instance (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_next_instance (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take_next_instance (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_next_instance_w_condition (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long take_next_instance_w_condition (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long return_loan (DealerSeq& received_data, DDS::SampleInfoSeq& info_seq) = 0;
+      virtual DDS::Long get_key_value (Dealer& key_holder, DDS::LongLong handle) = 0;
+      virtual DDS::LongLong lookup_instance (const Dealer& instance) = 0;
+
+   protected:
+      DealerDataReaderView () {};
+      ~DealerDataReaderView () {};
+   private:
+      DealerDataReaderView (const DealerDataReaderView &);
+      DealerDataReaderView & operator = (const DealerDataReaderView &);
    };
 
    struct GameSeq_uniq_ {};
