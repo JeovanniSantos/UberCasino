@@ -1,3 +1,5 @@
+#define DEBUG
+
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -36,6 +38,11 @@ public:
     g.gstate = waiting_to_join;
     strcpy(g.game_uid, d.game_uuid);
     strcpy(g.dealer_uid, d.uuid);
+  }
+  
+  /*** Function to set the Game State ***/
+  void SetGameState(game_state gs){
+    g.gstate = gs;
   }
   
   /*** Funtion to add a player to PlayerState ***/
@@ -147,10 +154,11 @@ public:
     GameInstance = (*d)->GetGame();
     
     if(GameInstance.gstate == waiting_to_join){
-      cout << "=== [Dealer Publisher] writing a message containing :" << endl;
-      cout << "    Game State : " << GameInstance.gstate << endl;
+#ifdef DEBUG
+      cout << "=== [Dealer] Looking for Players to join :" << endl;
       cout << "    Game ID    : " << GameInstance.game_uid << endl;
       cout << "    Dealer ID  : " << GameInstance.dealer_uid << endl;
+#endif
     }
     
     //if game state is playing, the dealer should destribute cards to each player
@@ -159,11 +167,11 @@ public:
       (*d)->SetCard(0, 0);
       string card = (*d)->GetPlayerCard(0, 0);
       string suite = (*d)->GetPlayerCardSuite(0, 0);
-      cout << "=== [Dealer Publisher] writing a message containing :" << endl;
-      cout << "    Game State : " << GameInstance.gstate << endl;
-      cout << "    Game ID    : " << GameInstance.game_uid << endl;
-      cout << "    Dealer ID  : " << GameInstance.dealer_uid << endl;
-      cout << "    Player 0 was dealt a " << card << " of " << suite << endl;      
+
+#ifdef DEBUG    
+      cout << "=== [Dealer] dealing card to player :" << endl;
+      cout << "    Player 0 was dealt a " << card << " of " << suite << endl; 
+#endif  
     }
     //cards were were distributed and game was changed
     newGame = (*d)->GetGame();
@@ -183,8 +191,6 @@ public:
 
     /* Remove Participant. */
     mgr.deleteParticipant();
-    
-    cout << "=== [Dealer Publisher] exiting..." << endl;
   }
 
   /*
@@ -198,6 +204,7 @@ public:
 
     os_time delay_2ms = { 0, 2000000 };
     os_time delay_200ms = { 0, 200000000 };
+    os_time delay_5s = { 5, 0 };
 
     //Create Participant
     mgr.createParticipant("UberCasino");
@@ -220,7 +227,9 @@ public:
     PlayerDataReader_var PlayerReader = PlayerDataReader::_narrow(dr.in());
     checkHandle(PlayerReader.in(), "PlayerDataReader::_narrow");
 
-    cout << "=== [Dealer Subscriber] Ready ..." << endl;
+    Game GameInstance;
+    GameInstance = (*d)->GetGame();
+
     bool found = false;
     ReturnCode_t status = -1;
 
@@ -234,13 +243,25 @@ public:
       DDS::ULong i;
       for(i = 0; i < ps.length(); i++)
       {
-	cout << "=== [Dealer Subscriber] message received :" << endl;
-        cout << "    Player ID  : " << ps[i].uuid << endl;
-        cout << "    Game ID : " << ps[i].game_uid << endl;
-        cout << "    Dealer ID : " << ps[i].dealer_uid << endl;
-        (*d)->AddPlayer(0, ps[i].uuid);
-        Game GameInstance = (*d)->GetGame();
-        cout << " Player with ID " << GameInstance.p[0].uuid << " was added to the game." << endl;
+        if(GameInstance.gstate == waiting_to_join){
+          (*d)->AddPlayer(0, ps[i].uuid);
+          char * uid = ps[i].uuid;
+#ifdef DEBUG
+          cout << "=== [Dealer] adding player to game :" << endl;
+          cout << " Player with ID " << uid << " was added to the game." << endl;
+#endif
+        }
+        else if(GameInstance.gstate == playing){
+#ifdef DEBUG
+          cout << "=== [Dealer] Player has submitted an action :" << endl;
+#endif
+          //Here Dealer should check for action submitted by Player
+          if(player_action_t::hitting == ps[i].A){
+            //Send Player a card
+            Publish(d);
+            os_nanoSleep(delay_5s);
+          }
+        }
 	found = true;
       }
 
@@ -262,8 +283,6 @@ public:
 
     /* Remove Participant. */
     mgr.deleteParticipant();
-
-    cout << "=== [Dealer Subscriber] Closing ..." << endl;
   }
 
 
@@ -281,7 +300,6 @@ int main(int argc, char **argv)
   d->SetDealer();
   d->SetGame();
 
-  //Publish Game to Players
   os_time delay_5s = { 5, 0 };
 
   //Publish the Game so Players can join
@@ -292,11 +310,15 @@ int main(int argc, char **argv)
 
   //start the game
   d->StartGame();
-  
+  Publish(&d);
+  os_nanoSleep(delay_5s);
   //send 10 queen of spades to the player
   for(int i = 0; i < 10; i++){
-    Publish(&d);
-    os_nanoSleep(delay_5s);
+    /*Based on action from Player, Dealer should publish to Player from
+      inside subscribe
+    */
+    Subscribe(&d);
+    //Publish(&d);
   }
 
   //if game is finsihed ask to start new game or quit

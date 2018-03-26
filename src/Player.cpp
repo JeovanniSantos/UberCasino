@@ -1,3 +1,5 @@
+#define DEBUG
+
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -42,6 +44,11 @@ public:
     strcpy(p.dealer_uid, dealer);
   }
 
+  /*** Function to set the action performed by Player ***/
+  void SetAction(player_action_t action){
+    p.A = action;
+  }
+
   /*** Function to retrieve a player's card type ***/
   string GetPlayerCard(card_kind c){
     char r[10];
@@ -78,6 +85,21 @@ public:
     return string(r);
   } 
 
+    /*** Function to retrieve a player's action ***/
+  string GetPlayerAction(player_action_t p){
+    char r[10];
+
+    switch( p )
+    {
+      case player_action_t::idle: strcpy(r, "idle"); break;
+      case player_action_t::hitting: strcpy(r, "hitting"); break;
+      case player_action_t::standing: strcpy(r, "standing"); break;
+      case player_action_t::splitting: strcpy(r, "splitting"); break;
+      case player_action_t::doubling: strcpy(r, "doubling"); break;
+    }
+    return string(r);
+  }
+ 
 };//end of class declaration
 
 /*
@@ -116,11 +138,14 @@ public:
     checkHandle(PlayerWriter.in(), "PlayerDataWriter::_narrow");
     
     PlayerInstance = (*p)->GetPlayer();
-    cout << "=== [Player Publisher] writing a message containing :" << endl;
+    string action = (*p)->GetPlayerAction(PlayerInstance.A);
+#ifdef DEBUG
+    cout << "=== [Player] writing a message containing :" << endl;
     cout << "    Player ID   : " << PlayerInstance.uuid << endl;
     cout << "    Game ID : " << PlayerInstance.game_uid << endl;
     cout << "    Dealer ID : " << PlayerInstance.dealer_uid << endl;
-   
+    cout << "    Player Action : " << action << endl;
+#endif   
     ReturnCode_t status = PlayerWriter->write(PlayerInstance,          DDS::HANDLE_NIL);
   checkStatus(status, "PlayerDataWriter::write");
   os_nanoSleep(delay_1s);
@@ -136,8 +161,6 @@ public:
 
     /* Remove Participant. */
     mgr.deleteParticipant();
-
-    cout << "=== [Player Publisher] exiting..." << endl;
   }
 
   /*
@@ -152,6 +175,7 @@ public:
 
     os_time delay_2ms = { 0, 2000000 };
     os_time delay_200ms = { 0, 200000000 };
+    os_time delay_5s = { 5, 0 };
     
     //Create Participant
     mgr.createParticipant("UberCasino");
@@ -174,7 +198,6 @@ public:
     GameDataReader_var GameReader;
     PlayerDataReader_var PlayerReader;
 
-    cout << "=== [Player Subscriber] Ready ..." << endl;
     bool found = false;
     ReturnCode_t status = -1;
 
@@ -192,18 +215,23 @@ public:
       for(i = 0; i < gs.length(); i++)
       {
 	if(gs[i].gstate == waiting_to_join){
-          cout << "=== [Player Subscriber] message received :" << endl;
+#ifdef DEBUG
+          cout << "=== [Player] Game information received :" << endl;
           cout << "    Game ID   : " << gs[i].game_uid << endl;
           cout << "    Dealer ID : " << gs[i].dealer_uid << endl;
+#endif
           (*p)->SetPlayerGame(gs[i].game_uid, gs[i].dealer_uid);
         }
         else if(gs[i].gstate == playing){
           string card = (*p)->GetPlayerCard(gs[i].p[0].cards[0].card);
           string suite = (*p)->GetPlayerCardSuite(gs[i].p[0].cards[0].suite);
-          cout << "=== [Player Subscriber] message received :" << endl;
-          cout << "    Game ID   : " << gs[i].game_uid << endl;
-          cout << "    Dealer ID : " << gs[i].dealer_uid << endl;
-          cout << "    Dealer dealt a " << card << " of " << suite << endl;  
+#ifdef DEBUG
+          cout << "=== [Player] received a card from Dealer :" << endl; 
+#endif
+          //Action is set to hitting && search for cards dealt by dealer
+          (*p)->SetAction(player_action_t::hitting);
+          Publish(p);
+          os_nanoSleep(delay_5s);
         }
 	found = true;
       }
@@ -226,8 +254,6 @@ public:
 
     /* Remove Participant. */
     mgr.deleteParticipant();
-
-    cout << "=== [Player Subscriber] Closing ..." << endl;
   }
 
 /** MAIN FUNCTION **/
@@ -255,11 +281,9 @@ int main (int argc, char **argv)
   Publish(&p);
   os_nanoSleep(delay_5s);
   
-  //start the game && search for cards dealt by dealer
-  
   for(int i = 0; i < 10; i++){
+    //Publish(&p);
     Subscribe(&p);
-    os_nanoSleep(delay_5s);
   }
 
   //if game is finsihed ask to start new game or quit
