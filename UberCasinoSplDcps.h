@@ -45,6 +45,7 @@ extern  void __UberCasino_card_t__copyOut(void *_from, void *_to);
 struct _UberCasino_card_t {
     enum _UberCasino_card_kind card;
     enum _UberCasino_suite_t suite;
+    c_bool valid;
 };
 
 extern c_metaObject __UberCasino_player_action_t__load (c_base base);
@@ -63,10 +64,10 @@ struct _UberCasino_Player ;
 extern  c_bool __UberCasino_Player__copyIn(c_base base, struct UberCasino::Player *from, struct _UberCasino_Player *to);
 extern  void __UberCasino_Player__copyOut(void *_from, void *_to);
 struct _UberCasino_Player {
-    c_char uuid[8];
+    c_long count;
+    c_char uid[16];
+    c_char game_uid[16];
     c_char name[32];
-    c_char game_uid[8];
-    c_char dealer_uid[8];
     c_float balance;
     enum _UberCasino_player_action_t A;
 };
@@ -85,9 +86,9 @@ struct _UberCasino_Dealer ;
 extern  c_bool __UberCasino_Dealer__copyIn(c_base base, struct UberCasino::Dealer *from, struct _UberCasino_Dealer *to);
 extern  void __UberCasino_Dealer__copyOut(void *_from, void *_to);
 struct _UberCasino_Dealer {
-    c_char uuid[8];
+    c_char uid[16];
     c_char name[32];
-    c_char game_uuid[8];
+    c_char game_uid[16];
 };
 
 extern c_metaObject __UberCasino_PlayerState__load (c_base base);
@@ -97,7 +98,7 @@ struct _UberCasino_PlayerState ;
 extern  c_bool __UberCasino_PlayerState__copyIn(c_base base, struct UberCasino::PlayerState *from, struct _UberCasino_PlayerState *to);
 extern  void __UberCasino_PlayerState__copyOut(void *_from, void *_to);
 struct _UberCasino_PlayerState {
-    c_char uuid[8];
+    c_char uid[16];
     struct _UberCasino_card_t cards[10];
 };
 
@@ -109,8 +110,8 @@ extern  c_bool __UberCasino_Game__copyIn(c_base base, struct UberCasino::Game *f
 extern  void __UberCasino_Game__copyOut(void *_from, void *_to);
 struct _UberCasino_Game {
     enum _UberCasino_game_state gstate;
-    c_char game_uid[8];
-    c_char dealer_uid[8];
+    c_char game_uid[16];
+    c_char dealer_uid[16];
     struct _UberCasino_PlayerState p[7];
     struct _UberCasino_card_t dealer_cards[10];
     c_long active_player;

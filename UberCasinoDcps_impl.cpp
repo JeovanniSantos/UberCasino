@@ -2222,15 +2222,14 @@ UberCasino::GameDataReaderView_impl::lookup_instance(
 
 const char * ::UberCasino::PlayerTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"UberCasino\"><Enum name=\"player_action_t\"><Element name=\"idle\" value=\"0\"/>",
 "<Element name=\"hitting\" value=\"1\"/><Element name=\"standing\" value=\"2\"/><Element name=\"splitting\" value=\"3\"/>",
-"<Element name=\"doubling\" value=\"4\"/></Enum><Struct name=\"Player\"><Member name=\"uuid\"><Array size=\"8\">",
-"<Char/></Array></Member><Member name=\"name\"><Array size=\"32\"><Char/></Array></Member><Member name=\"game_uid\">",
-"<Array size=\"8\"><Char/></Array></Member><Member name=\"dealer_uid\"><Array size=\"8\"><Char/></Array>",
-"</Member><Member name=\"balance\"><Float/></Member><Member name=\"A\"><Type name=\"player_action_t\"/>",
-"</Member></Struct></Module></MetaData>"};
-const ::DDS::ULong (::UberCasino::PlayerTypeSupport::metaDescriptorArrLength) = 7;
-const char * ::UberCasino::DealerTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"UberCasino\"><Struct name=\"Dealer\"><Member name=\"uuid\">",
-"<Array size=\"8\"><Char/></Array></Member><Member name=\"name\"><Array size=\"32\"><Char/></Array></Member>",
-"<Member name=\"game_uuid\"><Array size=\"8\"><Char/></Array></Member></Struct></Module></MetaData>"};
+"<Element name=\"doubling\" value=\"4\"/></Enum><Struct name=\"Player\"><Member name=\"count\"><Long/>",
+"</Member><Member name=\"uid\"><Array size=\"16\"><Char/></Array></Member><Member name=\"game_uid\"><Array size=\"16\">",
+"<Char/></Array></Member><Member name=\"name\"><Array size=\"32\"><Char/></Array></Member><Member name=\"balance\">",
+"<Float/></Member><Member name=\"A\"><Type name=\"player_action_t\"/></Member></Struct></Module></MetaData>"};
+const ::DDS::ULong (::UberCasino::PlayerTypeSupport::metaDescriptorArrLength) = 6;
+const char * ::UberCasino::DealerTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"UberCasino\"><Struct name=\"Dealer\"><Member name=\"uid\">",
+"<Array size=\"16\"><Char/></Array></Member><Member name=\"name\"><Array size=\"32\"><Char/></Array></Member>",
+"<Member name=\"game_uid\"><Array size=\"16\"><Char/></Array></Member></Struct></Module></MetaData>"};
 const ::DDS::ULong (::UberCasino::DealerTypeSupport::metaDescriptorArrLength) = 3;
 const char * ::UberCasino::GameTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"UberCasino\"><Enum name=\"game_state\"><Element name=\"waiting_to_join\" value=\"0\"/>",
 "<Element name=\"waiting\" value=\"1\"/><Element name=\"playing\" value=\"2\"/></Enum><Enum name=\"card_kind\">",
@@ -2241,11 +2240,11 @@ const char * ::UberCasino::GameTypeSupport::metaDescriptor[] = {"<MetaData versi
 "<Element name=\"king\" value=\"12\"/></Enum><Enum name=\"suite_t\"><Element name=\"hearts\" value=\"0\"/>",
 "<Element name=\"diamonds\" value=\"1\"/><Element name=\"clubs\" value=\"2\"/><Element name=\"spades\" value=\"3\"/>",
 "</Enum><Struct name=\"card_t\"><Member name=\"card\"><Type name=\"card_kind\"/></Member><Member name=\"suite\">",
-"<Type name=\"suite_t\"/></Member></Struct><Struct name=\"PlayerState\"><Member name=\"uuid\"><Array size=\"8\">",
-"<Char/></Array></Member><Member name=\"cards\"><Array size=\"10\"><Type name=\"card_t\"/></Array></Member>",
-"</Struct><Struct name=\"Game\"><Member name=\"gstate\"><Type name=\"game_state\"/></Member><Member name=\"game_uid\">",
-"<Array size=\"8\"><Char/></Array></Member><Member name=\"dealer_uid\"><Array size=\"8\"><Char/></Array>",
-"</Member><Member name=\"p\"><Array size=\"7\"><Type name=\"PlayerState\"/></Array></Member><Member name=\"dealer_cards\">",
-"<Array size=\"10\"><Type name=\"card_t\"/></Array></Member><Member name=\"active_player\"><Long/></Member>",
-"</Struct></Module></MetaData>"};
+"<Type name=\"suite_t\"/></Member><Member name=\"valid\"><Boolean/></Member></Struct><Struct name=\"PlayerState\">",
+"<Member name=\"uid\"><Array size=\"16\"><Char/></Array></Member><Member name=\"cards\"><Array size=\"10\">",
+"<Type name=\"card_t\"/></Array></Member></Struct><Struct name=\"Game\"><Member name=\"gstate\"><Type name=\"game_state\"/>",
+"</Member><Member name=\"game_uid\"><Array size=\"16\"><Char/></Array></Member><Member name=\"dealer_uid\">",
+"<Array size=\"16\"><Char/></Array></Member><Member name=\"p\"><Array size=\"7\"><Type name=\"PlayerState\"/>",
+"</Array></Member><Member name=\"dealer_cards\"><Array size=\"10\"><Type name=\"card_t\"/></Array></Member>",
+"<Member name=\"active_player\"><Long/></Member></Struct></Module></MetaData>"};
 const ::DDS::ULong (::UberCasino::GameTypeSupport::metaDescriptorArrLength) = 16;

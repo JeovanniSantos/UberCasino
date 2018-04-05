@@ -27,7 +27,7 @@ public:
 
   /*** Function to Setup Player ***/
   void SetPlayer(){
-    strcpy(p.uuid, "123");
+    strcpy(p.uid, "123");
     strcpy(p.name, "TestPlayer");
     p.balance = 500;
     p.A = idle;
@@ -39,9 +39,8 @@ public:
   }
   
   /*** Function to Set The player's Game ID ***/
-  void SetPlayerGame(char * game, char * dealer){
+  void SetPlayerGame(char * game){
     strcpy(p.game_uid, game);
-    strcpy(p.dealer_uid, dealer);
   }
 
   /*** Function to set the action performed by Player ***/
@@ -112,14 +111,14 @@ public:
     os_time delay_1s = { 1, 0 };
 
     //Create Participant
-    mgr.createParticipant("UberCasino");
+    mgr.createParticipant("");
  
     //Create Type
     PlayerTypeSupportInterface_var pts = new PlayerTypeSupport();
     mgr.registerType(pts.in());
 
     //Create Topic
-    char topic_name[] = "Player";
+    char topic_name[] = "player";
     mgr.createTopic(topic_name);
 
     //Create Publisher
@@ -141,9 +140,8 @@ public:
     string action = (*p)->GetPlayerAction(PlayerInstance.A);
 #ifdef DEBUG
     cout << "=== [Player] writing a message containing :" << endl;
-    cout << "    Player ID   : " << PlayerInstance.uuid << endl;
+    cout << "    Player ID   : " << PlayerInstance.uid << endl;
     cout << "    Game ID : " << PlayerInstance.game_uid << endl;
-    cout << "    Dealer ID : " << PlayerInstance.dealer_uid << endl;
     cout << "    Player Action : " << action << endl;
 #endif   
     ReturnCode_t status = PlayerWriter->write(PlayerInstance,          DDS::HANDLE_NIL);
@@ -178,14 +176,14 @@ public:
     os_time delay_5s = { 5, 0 };
     
     //Create Participant
-    mgr.createParticipant("UberCasino");
+    mgr.createParticipant("");
 
     //Create Type
     GameTypeSupportInterface_var pts = new GameTypeSupport();
     mgr.registerType(pts.in());
 
     //Create Topic
-    char topic_name[] = "Game";
+    char topic_name[] = "game";
     mgr.createTopic(topic_name);
 
     //Create Subscriber
@@ -220,7 +218,7 @@ public:
           cout << "    Game ID   : " << gs[i].game_uid << endl;
           cout << "    Dealer ID : " << gs[i].dealer_uid << endl;
 #endif
-          (*p)->SetPlayerGame(gs[i].game_uid, gs[i].dealer_uid);
+          (*p)->SetPlayerGame(gs[i].game_uid);
         }
         else if(gs[i].gstate == playing){
           string card = (*p)->GetPlayerCard(gs[i].p[0].cards[0].card);

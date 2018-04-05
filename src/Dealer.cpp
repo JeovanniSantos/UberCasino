@@ -11,6 +11,8 @@
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Box.H>
+#include "deck.h"
+#include "uuid.h"
 
 using namespace DDS;
 using namespace UberCasino;
@@ -21,23 +23,35 @@ class UCDealer{
 private:
     Dealer d;
     Game g;
+    Deck deck;
 public:
   UCDealer(){
 
   }
   
+  /*** Function to Setup Deck ***/ //need to update
+  void SetDeck(){
+    deck.create_test_deck();
+    deck.create_eight_deck();
+    deck.create_infinite_deck();
+  }
+
+
   /*** Function to Setup Dealer ***/
   void SetDealer(){
-    strcpy(d.uuid, "1111");
+    //needs to set uuid for dealer and game using generator
+    const char * DealerUid = uuid_generator();
+    const char * GameUid = uuid_generator();
+    strcpy(d.uid, DealerUid);
     strcpy(d.name, "Test Dealer");
-    strcpy(d.game_uuid, "12345");
+    strcpy(d.game_uid, GameUid);
   }
 
   /*** Function to Setup Game Setting ***/
   void SetGame(){
     g.gstate = waiting_to_join;
-    strcpy(g.game_uid, d.game_uuid);
-    strcpy(g.dealer_uid, d.uuid);
+    strcpy(g.game_uid, d.game_uid);
+    strcpy(g.dealer_uid, d.uid);
   }
   
   /*** Function to set the Game State ***/
@@ -46,20 +60,18 @@ public:
   }
   
   /*** Funtion to add a player to PlayerState ***/
-  void AddPlayer(int num, char * uuid){
-    strcpy(g.p[num].uuid, uuid);
+  void AddPlayer(int num, char * uid){
+    strcpy(g.p[num].uid, uid);
   }
 
   /*** Function to send a card to Player ***/
   void SetCard(int player, int count){
     //generate a random card
-    card_t c;
-    c.card = queen;
-    c.suite = spades;
+    card_t c = deck.deal_a_card();
     g.p[player].cards[count] = c;
   }
 
-  /*** Function to retrieve a player's card type ***/
+  /*** Needs to be replaced with toString() Function to retrieve a player's card type ***/
   string GetPlayerCard(int player, int count){
     card_t c = g.p[player].cards[count];
     char r[10];
@@ -82,7 +94,7 @@ public:
     return string(r);
   }  
 
-  /*** Function to retrieve a player's card suite type ***/
+  /*** Needs to be replaced with toString() Function to retrieve a player's card suite type ***/
   string GetPlayerCardSuite(int player, int count){
     card_t c = g.p[player].cards[count];
     char r[10];
@@ -114,7 +126,7 @@ public:
 
 };//end of class declaration
 
-/*
+  /*
   function to to act as publisher and write data passed in as parameter
   */
   void Publish(UCDealer **d)
@@ -124,14 +136,14 @@ public:
     os_time delay_1s = { 1, 0 };
     
     //Create Participant
-    mgr.createParticipant("UberCasino");
+    mgr.createParticipant("");
 
     //Create Type
     GameTypeSupportInterface_var pts = new GameTypeSupport();
     mgr.registerType(pts.in());
     
     //Create Topic
-    char topic_name[] = "Game";
+    char topic_name[] = "game";
     mgr.createTopic(topic_name);
 
     //Create Publisher
@@ -207,14 +219,14 @@ public:
     os_time delay_5s = { 5, 0 };
 
     //Create Participant
-    mgr.createParticipant("UberCasino");
+    mgr.createParticipant("");
 
     //Create Type
     PlayerTypeSupportInterface_var pts = new PlayerTypeSupport();
     mgr.registerType(pts.in());
 
     //Create Topic
-    char topic_name[] = "Player";
+    char topic_name[] = "player";
     mgr.createTopic(topic_name);
 
     //Create Subscriber
@@ -244,8 +256,8 @@ public:
       for(i = 0; i < ps.length(); i++)
       {
         if(GameInstance.gstate == waiting_to_join){
-          (*d)->AddPlayer(0, ps[i].uuid);
-          char * uid = ps[i].uuid;
+          (*d)->AddPlayer(0, ps[i].uid);
+          char * uid = ps[i].uid;
 #ifdef DEBUG
           cout << "=== [Dealer] adding player to game :" << endl;
           cout << " Player with ID " << uid << " was added to the game." << endl;

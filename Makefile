@@ -26,12 +26,14 @@ IDL_GENERATED=${IDL_GENERATED_H} ${IDL_GENERATED_CPP}
 ${IDL_GENERATED}: ./idl/UberCasino.idl
 	${OSPL_HOME}/bin/idlpp -l cpp ./idl/UberCasino.idl
 
-COMMON_CPP=./src/CheckStatus.cpp ./src/DDSEntityManager.cpp
+COMMON_CPP=./src/CheckStatus.cpp ./src/DDSEntityManager.cpp ./src/deck.cpp
 
-PitBoss: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ./src/PitBoss.cpp
+COMMON_H= ./include/deck.h ./include/uuid.h
+
+PitBoss: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ./src/PitBoss.cpp ${COMMON_CPP}
 	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LDFLAGS} ${LIBS} ${INCLUDE}
 
-Dealer:  ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ./src/Dealer.cpp ${COMMON_CPP}
+Dealer:  ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ./src/Dealer.cpp ${COMMON_H} ${COMMON_CPP}
 	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LDFLAGS} ${LIBS} ${INCLUDE}
 
 Player:  ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ./src/Player.cpp ${COMMON_CPP}

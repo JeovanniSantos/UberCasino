@@ -97,6 +97,7 @@ __UberCasino_card_t__copyIn(
 #else
     to->suite = (enum _UberCasino_suite_t)from->suite;
 #endif
+    to->valid = (c_bool)from->valid;
     return result;
 }
 
@@ -109,25 +110,21 @@ __UberCasino_Player__copyIn(
     c_bool result = OS_C_TRUE;
     (void) base;
 
+    to->count = (c_long)from->count;
     {
-        typedef c_char _DestType[8];
-        _DestType *dest = &to->uuid;
-        memcpy (dest, from->uuid, sizeof (*dest));
+        typedef c_char _DestType[16];
+        _DestType *dest = &to->uid;
+        memcpy (dest, from->uid, sizeof (*dest));
+    }
+    {
+        typedef c_char _DestType[16];
+        _DestType *dest = &to->game_uid;
+        memcpy (dest, from->game_uid, sizeof (*dest));
     }
     {
         typedef c_char _DestType[32];
         _DestType *dest = &to->name;
         memcpy (dest, from->name, sizeof (*dest));
-    }
-    {
-        typedef c_char _DestType[8];
-        _DestType *dest = &to->game_uid;
-        memcpy (dest, from->game_uid, sizeof (*dest));
-    }
-    {
-        typedef c_char _DestType[8];
-        _DestType *dest = &to->dealer_uid;
-        memcpy (dest, from->dealer_uid, sizeof (*dest));
     }
     to->balance = (c_float)from->balance;
 #ifdef OSPL_BOUNDS_CHECK
@@ -153,9 +150,9 @@ __UberCasino_Dealer__copyIn(
     (void) base;
 
     {
-        typedef c_char _DestType[8];
-        _DestType *dest = &to->uuid;
-        memcpy (dest, from->uuid, sizeof (*dest));
+        typedef c_char _DestType[16];
+        _DestType *dest = &to->uid;
+        memcpy (dest, from->uid, sizeof (*dest));
     }
     {
         typedef c_char _DestType[32];
@@ -163,9 +160,9 @@ __UberCasino_Dealer__copyIn(
         memcpy (dest, from->name, sizeof (*dest));
     }
     {
-        typedef c_char _DestType[8];
-        _DestType *dest = &to->game_uuid;
-        memcpy (dest, from->game_uuid, sizeof (*dest));
+        typedef c_char _DestType[16];
+        _DestType *dest = &to->game_uid;
+        memcpy (dest, from->game_uid, sizeof (*dest));
     }
     return result;
 }
@@ -180,9 +177,9 @@ __UberCasino_PlayerState__copyIn(
     (void) base;
 
     {
-        typedef c_char _DestType[8];
-        _DestType *dest = &to->uuid;
-        memcpy (dest, from->uuid, sizeof (*dest));
+        typedef c_char _DestType[16];
+        _DestType *dest = &to->uid;
+        memcpy (dest, from->uid, sizeof (*dest));
     }
     {
         typedef struct _UberCasino_card_t _DestType[10];
@@ -222,12 +219,12 @@ __UberCasino_Game__copyIn(
     to->gstate = (enum _UberCasino_game_state)from->gstate;
 #endif
     {
-        typedef c_char _DestType[8];
+        typedef c_char _DestType[16];
         _DestType *dest = &to->game_uid;
         memcpy (dest, from->game_uid, sizeof (*dest));
     }
     {
-        typedef c_char _DestType[8];
+        typedef c_char _DestType[16];
         _DestType *dest = &to->dealer_uid;
         memcpy (dest, from->dealer_uid, sizeof (*dest));
     }
@@ -274,6 +271,7 @@ __UberCasino_card_t__copyOut(
     struct ::UberCasino::card_t *to = (struct ::UberCasino::card_t *)_to;
     to->card = (::UberCasino::card_kind)from->card;
     to->suite = (::UberCasino::suite_t)from->suite;
+    to->valid = (::DDS::Boolean)(from->valid != 0);
 }
 
 void
@@ -283,29 +281,24 @@ __UberCasino_Player__copyOut(
 {
     struct _UberCasino_Player *from = (struct _UberCasino_Player *)_from;
     struct ::UberCasino::Player *to = (struct ::UberCasino::Player *)_to;
+    to->count = (::DDS::Long)from->count;
     {
-        typedef c_char _DestType[8];
-        _DestType *src = &from->uuid;
+        typedef c_char _DestType[16];
+        _DestType *src = &from->uid;
 
-        memcpy (to->uuid, src, sizeof (*src));
+        memcpy (to->uid, src, sizeof (*src));
+    }
+    {
+        typedef c_char _DestType[16];
+        _DestType *src = &from->game_uid;
+
+        memcpy (to->game_uid, src, sizeof (*src));
     }
     {
         typedef c_char _DestType[32];
         _DestType *src = &from->name;
 
         memcpy (to->name, src, sizeof (*src));
-    }
-    {
-        typedef c_char _DestType[8];
-        _DestType *src = &from->game_uid;
-
-        memcpy (to->game_uid, src, sizeof (*src));
-    }
-    {
-        typedef c_char _DestType[8];
-        _DestType *src = &from->dealer_uid;
-
-        memcpy (to->dealer_uid, src, sizeof (*src));
     }
     to->balance = (::DDS::Float)from->balance;
     to->A = (::UberCasino::player_action_t)from->A;
@@ -319,10 +312,10 @@ __UberCasino_Dealer__copyOut(
     struct _UberCasino_Dealer *from = (struct _UberCasino_Dealer *)_from;
     struct ::UberCasino::Dealer *to = (struct ::UberCasino::Dealer *)_to;
     {
-        typedef c_char _DestType[8];
-        _DestType *src = &from->uuid;
+        typedef c_char _DestType[16];
+        _DestType *src = &from->uid;
 
-        memcpy (to->uuid, src, sizeof (*src));
+        memcpy (to->uid, src, sizeof (*src));
     }
     {
         typedef c_char _DestType[32];
@@ -331,10 +324,10 @@ __UberCasino_Dealer__copyOut(
         memcpy (to->name, src, sizeof (*src));
     }
     {
-        typedef c_char _DestType[8];
-        _DestType *src = &from->game_uuid;
+        typedef c_char _DestType[16];
+        _DestType *src = &from->game_uid;
 
-        memcpy (to->game_uuid, src, sizeof (*src));
+        memcpy (to->game_uid, src, sizeof (*src));
     }
 }
 
@@ -346,10 +339,10 @@ __UberCasino_PlayerState__copyOut(
     struct _UberCasino_PlayerState *from = (struct _UberCasino_PlayerState *)_from;
     struct ::UberCasino::PlayerState *to = (struct ::UberCasino::PlayerState *)_to;
     {
-        typedef c_char _DestType[8];
-        _DestType *src = &from->uuid;
+        typedef c_char _DestType[16];
+        _DestType *src = &from->uid;
 
-        memcpy (to->uuid, src, sizeof (*src));
+        memcpy (to->uid, src, sizeof (*src));
     }
     {
         typedef struct _UberCasino_card_t _DestType[10];
@@ -373,13 +366,13 @@ __UberCasino_Game__copyOut(
     struct ::UberCasino::Game *to = (struct ::UberCasino::Game *)_to;
     to->gstate = (::UberCasino::game_state)from->gstate;
     {
-        typedef c_char _DestType[8];
+        typedef c_char _DestType[16];
         _DestType *src = &from->game_uid;
 
         memcpy (to->game_uid, src, sizeof (*src));
     }
     {
-        typedef c_char _DestType[8];
+        typedef c_char _DestType[16];
         _DestType *src = &from->dealer_uid;
 
         memcpy (to->dealer_uid, src, sizeof (*src));
